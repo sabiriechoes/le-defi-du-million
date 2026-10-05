@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي المليون | Le Défi du Million - الموقع الرسمي للبرنامج</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#0c0b0a',
+                            900: '#121110',
+                            850: '#161513',
+                            800: '#1c1a17',
+                            700: '#26231f'
+                        },
+                        brand: {
+                            crema: '#D4A373',
+                            terra: '#E29578',
+                            gold: '#C8A951',
+                            red: '#8B1A1A',
+                            espresso: '#3C2F2F',
+                            sand: '#F5E6CC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'Cairo', 'sans-serif'],
+                        heading: ['Cairo', 'sans-serif'],
+                        latin: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0c0b0a;
+            color: #FAFAFA;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cairo', sans-serif;
+        }
+        .glass {
+            background: rgba(22, 21, 19, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 163, 115, 0.18);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 28, 25, 0.92) 0%, rgba(18, 17, 16, 0.98) 100%);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(200, 169, 81, 0.55);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85), 0 0 25px rgba(200, 169, 81, 0.2);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(to left, #F5E6CC, #C8A951, #D4A373);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-coffee {
+            background: linear-gradient(to left, #E29578, #D4A373);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0c0b0a; }
+        ::-webkit-scrollbar-thumb { background: #3C2F2F; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4A373; }
+    
+        /* DYNAMIC MOTION & CINEMATIC EFFECTS */
+        @keyframes shimmerGlow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .text-shimmer {
+            background: linear-gradient(90deg, #F5E6CC 0%, #C8A951 25%, #FFF 50%, #C8A951 75%, #F5E6CC 100%);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerGlow 6s linear infinite;
+        }
+        @keyframes pulseBorder {
+            0%, 100% { border-color: rgba(200, 169, 81, 0.3); box-shadow: 0 0 15px rgba(200, 169, 81, 0.1); }
+            50% { border-color: rgba(200, 169, 81, 0.7); box-shadow: 0 0 25px rgba(200, 169, 81, 0.35); }
+        }
+        .pulse-gold {
+            animation: pulseBorder 3s ease-in-out infinite;
+        }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .floating-badge {
+            animation: floatBadge 3.5s ease-in-out infinite;
+        }
+    </style>
+    <!-- Leaflet Satellite Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Three.js 3D WebGL Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="presentation_data.js?v=2"></script>
+    <script src="map_3d_engine.js?v=2"></script>
+</head>
+<body class="selection:bg-brand-gold selection:text-dark-950">
+
+    <!-- Top Navigation -->
+    <nav class="fixed w-full z-50 glass top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <span class="font-extrabold text-2xl tracking-wider text-brand-gold">«تحدي المليون»</span>
+                    <span class="text-xs text-gray-400 font-latin uppercase tracking-widest hidden sm:inline">| Le Défi du Million</span>
+                </div>
+
+                <div class="hidden lg:flex items-center gap-6 text-sm font-semibold text-gray-300">
+                    <a href="#concept" class="hover:text-brand-gold transition-colors">الفكرة</a>
+                    <a href="#rundown" class="hover:text-brand-gold transition-colors">هيكل الحلقة</a>
+                    <a href="#cities" class="hover:text-brand-gold transition-colors text-brand-gold font-bold">المحطات (35)</a>
+                    <a href="#asta" class="hover:text-brand-crema transition-colors text-brand-crema font-bold">قهوة أسطا (Asta)</a>
+                    <a href="#car" class="hover:text-brand-gold transition-colors">Dacia Bigster</a>
+                    <a href="#rules" class="hover:text-brand-gold transition-colors">القواعد</a>
+                    <a href="#bts" class="hover:text-brand-gold transition-colors">كواليس 4K</a>
+                    <a href="#budget" class="hover:text-brand-gold transition-colors">الميزانية</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="presentation.html" class="px-4 py-2 rounded-xl bg-gradient-to-r from-brand-crema/20 to-brand-gold/20 border border-brand-gold/40 text-brand-gold text-xs font-bold hover:bg-brand-gold hover:text-dark-950 transition-all flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                        <span>خريطة التراجي الفضائية</span>
+                    </a>
+                    <a href="#participate" class="px-4 py-2 rounded-xl bg-brand-gold text-dark-950 text-xs font-bold hover:scale-105 transition-all">
+                        شارك معانا
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex items-center justify-center min-h-[92vh]">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-dark-900/60 via-dark-950/95 to-dark-950"></div>
+            <div class="absolute inset-0 bg-[url('images/pitch/bigster_desert.jpg')] bg-cover bg-center opacity-20 filter blur-[1px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <!-- Host & Creator Tag -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border border-brand-gold/40">
+                    <img src="images/pitch/fayssal_profile.jpg" alt="Fayssal Vlog" class="w-8 h-8 rounded-full border border-brand-gold object-cover">
+                    <span class="text-xs sm:text-sm font-bold text-gray-200">
+                        تقديم: <span class="text-brand-gold">Fayssal Vlog</span>
+                    </span>
+                    <span class="text-xs bg-brand-gold/20 text-brand-gold px-2.5 py-0.5 rounded-full font-mono">+400K Communauté</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-brand-crema/40 text-xs text-brand-crema font-bold">
+                    <span>☕ برعاية قهوة أسطا (Café Asta) و Dacia Bigster</span>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tight leading-tight">
+                «تحدي المليون»<br>
+                <span class="text-gradient-gold text-shimmer text-3xl sm:text-5xl md:text-6xl">Le Défi du Million</span>
+            </h1>
+
+            <p class="text-lg sm:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed mb-10">
+                متسابقان، مساران مختلفان، والمغرب كامل لاكتشافه خطوة بخطوة.<br class="hidden sm:inline">
+                <span class="text-white font-bold">بدون GPS • بدون هواتف • وبدون أوطوروت</span> — فقط الخريطة الورقية وكرم أولاد البلاد!
+            </p>
+
+            <!-- Key metrics bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 max-w-5xl mx-auto mb-12">
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-brand-gold font-mono block">6</span>
+                    <span class="text-xs text-gray-300 font-bold">حلقات مستقلة</span>
+                </div>
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-brand-crema font-mono block">12</span>
+                    <span class="text-xs text-gray-300 font-bold">متبارياً (6 نساء/6 رجال)</span>
+                </div>
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-white font-mono block">35</span>
+                    <span class="text-xs text-gray-300 font-bold">محطة ومدينة مغربية</span>
+                </div>
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-emerald-400 font-mono block">10,000 DH</span>
+                    <span class="text-xs text-gray-300 font-bold">كاش للفائز بكل حلقة</span>
+                </div>
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-red-400 font-mono block">0 GPS</span>
+                    <span class="text-xs text-gray-300 font-bold">خريطة ورقية فقط</span>
+                </div>
+                <div class="glass p-3 rounded-xl border border-white/10 text-center">
+                    <span class="text-xl sm:text-2xl font-black text-blue-400 font-mono block">0 أوطوروت</span>
+                    <span class="text-xs text-gray-300 font-bold">طرق وطنية وجهوية</span>
+                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-wrap gap-4 justify-center items-center">
+                <a href="#cities" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-crema to-brand-gold text-dark-950 font-black text-base shadow-xl hover:scale-105 transition-all">
+                    اكتشف الـ 35 محطة والتحديات
+                </a>
+                <a href="#asta" class="px-8 py-4 rounded-xl glass border border-brand-crema/40 text-brand-crema hover:bg-brand-crema/10 font-bold text-base transition-all">
+                    شراكة قهوة أسطا (Asta)
+                </a>
+                <a href="#participate" class="px-8 py-4 rounded-xl glass border border-white/20 text-white hover:bg-white/10 font-bold text-base transition-all">
+                    شارك فـ الكاستينغ
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SECTION: GOOGLE EARTH SATELLITE MAP WITH HIGHLIGHTED TRAILS & 3D LANDMARKS -->
+    <section class="py-24 relative bg-dark-950 border-t border-white/10 overflow-hidden" id="map-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Title & Legend -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>خريطة تفاعلية • مسارات مهايلايتية ملونة • مجسمات 3D طراز Google Earth</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+                        خريطة التراجي الفضائية: <span class="text-gradient-gold">المغرب بدون أوطوروت</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+                        كل طراجي مهايلايتي بلون مخصص، ونقط التوقف معلمين فوق الخريطة. <strong class="text-brand-gold">زومي على أي مدينة أو كليكي عليها</strong> باش يطلع ليك المجسم ثلاثي الأبعاد 3D بحال Google Earth والصورة الحقيقية للمكان!
+                    </p>
+                </div>
+
+                <!-- Trajet Color Code Legend -->
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="px-3 py-1 rounded-xl bg-cyan-950/70 border border-cyan-400/50 text-cyan-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> 1. الشمال (Turquoise)
+                    </span>
+                    <span class="px-3 py-1 rounded-xl bg-amber-950/70 border border-amber-400/50 text-amber-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> 2. الشرق (Or)
+                    </span>
+                    <span class="px-3 py-1 rounded-xl bg-orange-950/70 border border-orange-500/50 text-orange-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> 3. الأطلس (Terracotta)
+                    </span>
+                    <span class="px-3 py-1 rounded-xl bg-emerald-950/70 border border-emerald-400/50 text-emerald-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> 4. الساحل (Émeraude)
+                    </span>
+                    <span class="px-3 py-1 rounded-xl bg-purple-950/70 border border-purple-400/50 text-purple-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span> 5. سوس (Pourpre)
+                    </span>
+                    <span class="px-3 py-1 rounded-xl bg-yellow-950/70 border border-yellow-400/50 text-yellow-300 font-bold flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span> 6. الصحراء (Désert)
+                    </span>
+                </div>
+            </div>
+
+            <!-- Trajet Filter Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button type="button" id="map-btn-ep-1" onclick="window.selectEpisode(1)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-gold text-dark-950 transition-all">الحلقة 1: الشمال (5)</button>
+                <button type="button" id="map-btn-ep-2" onclick="window.selectEpisode(2)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 2: الشرق (6)</button>
+                <button type="button" id="map-btn-ep-3" onclick="window.selectEpisode(3)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 3: الأطلس والواحات (6)</button>
+                <button type="button" id="map-btn-ep-4" onclick="window.selectEpisode(4)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 4: الساحل (6)</button>
+                <button type="button" id="map-btn-ep-5" onclick="window.selectEpisode(5)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 5: سوس (6)</button>
+                <button type="button" id="map-btn-ep-6" onclick="window.selectEpisode(6)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 6: الصحراء (6)</button>
+                <button type="button" id="map-btn-ep-all" onclick="window.selectEpisode('all')" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الكل (35 محطة)</button>
+            </div>
+
+            <!-- Map Control & Layer Switcher -->
+            <div class="glass p-4 rounded-2xl mb-4 border border-brand-gold/30 flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-brand-gold font-bold">✨ نصيحة:</span>
+                    <span class="text-xs text-gray-300">انقر على أي نقطة أو زومي عليها لمشاهدة المجسم ثلاثي الأبعاد 3D للموقع!</span>
+                </div>
+
+                <div class="flex items-center gap-2 text-xs">
+                    <span class="text-gray-400">الخريطة:</span>
+                    <button type="button" onclick="window.selectLayer('satellite')" id="layer-btn-sat" class="px-3 py-1.5 rounded-xl bg-brand-gold text-dark-950 font-bold border border-brand-gold">🛰️ قمر صناعي (Satellite)</button>
+                    <button type="button" onclick="window.selectLayer('streets')" id="layer-btn-str" class="px-3 py-1.5 rounded-xl glass text-gray-300 font-bold hover:text-white">🗺️ خريطة طرقية (Roads)</button>
+                    <button type="button" onclick="window.resetMapZoom()" class="px-3 py-1.5 rounded-xl glass text-gray-300 hover:text-white border border-white/20">🔄 إعادة الزوم</button>
+                </div>
+            </div>
+
+            <!-- Route Dynamic Banner -->
+            <div id="route-info-banner" class="mb-4 glass px-6 py-3.5 rounded-2xl border border-brand-gold/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div>
+                    <span class="text-[11px] uppercase tracking-wider text-brand-crema font-bold font-latin">ITINÉRAIRE SÉLECTIONNÉ</span>
+                    <h3 id="route-banner-title" class="text-lg font-bold text-white">الحلقة 1: مسار الشمال والريف العتيق</h3>
+                </div>
+                <div class="text-right">
+                    <span class="text-[11px] text-gray-400 block font-latin">CLASSIFICATION DES ROUTES:</span>
+                    <span id="route-banner-roads" class="text-xs sm:text-sm font-bold text-brand-gold">الطريق الوطنية N13 + N2 + الجهوية R410 (0 أوطوروت)</span>
+                </div>
+            </div>
+
+            <!-- THE SATELLITE MAP CONTAINER & FLOATING 3D GOOGLE EARTH BOX -->
+            <div class="relative rounded-3xl overflow-hidden border border-brand-gold/30 shadow-2xl">
+                <!-- Leaflet Map Container -->
+                <div id="morocco-satellite-map" style="height: 580px; width: 100%;"></div>
+
+                <!-- FLOATING 3D GOOGLE EARTH BOX (Appears on Zoom or Stop Click) -->
+                <div id="google-earth-3d-box" class="hidden absolute top-4 right-4 bottom-4 z-30 max-w-sm w-full glass-card p-5 rounded-2xl border border-brand-gold/50 shadow-2xl backdrop-blur-xl flex flex-col justify-between overflow-y-auto">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-gold font-latin">GOOGLE EARTH 3D VIEW</span>
+                                <h4 id="ge3d-stop-name" class="text-lg font-black text-white"></h4>
+                            </div>
+                            <button type="button" onclick="close3DLandmarkBox()" class="w-8 h-8 rounded-full glass text-white flex items-center justify-center font-bold hover:bg-red-600 transition-all text-xs">✕</button>
+                        </div>
+
+                        <!-- 3D WebGL Canvas Box -->
+                        <div class="relative rounded-xl overflow-hidden border border-brand-gold/40 bg-dark-950 mb-3">
+                            <span class="absolute top-2 right-2 z-10 bg-dark-950/80 px-2 py-0.5 rounded text-[9px] font-bold text-brand-gold border border-brand-gold/30">
+                                🧊 مجسم 3D تفاعلي (دور بالماوس 360°)
+                            </span>
+                            <div id="ge3d-canvas-container" style="height: 180px; width: 100%;"></div>
+                        </div>
+
+                        <!-- Real Photo of the Stop -->
+                        <div class="relative rounded-xl overflow-hidden h-28 border border-white/10 mb-3">
+                            <img id="ge3d-stop-img" src="" alt="" class="w-full h-full object-cover">
+                            <span class="absolute bottom-1 right-2 text-[10px] font-bold text-white bg-dark-950/80 px-2 py-0.5 rounded border border-white/20">
+                                📸 الصورة الحقيقية للمكان
+                            </span>
+                        </div>
+
+                        <!-- Challenges Summary -->
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-amber-950/40 p-2.5 rounded-xl border border-brand-gold/30">
+                                <span class="text-[11px] font-bold text-brand-gold block">🔨 تحدي الصنعة:</span>
+                                <span id="ge3d-craft-name" class="text-white font-bold leading-tight block"></span>
+                            </div>
+                            <div class="bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-500/30">
+                                <span class="text-[11px] font-bold text-emerald-400 block">🏛️ المعلم والأثر:</span>
+                                <span id="ge3d-hist-name" class="text-white font-bold leading-tight block"></span>
+                                <span id="ge3d-hist-site" class="text-[10px] text-gray-300 block mt-1"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-white/10 flex gap-2">
+                        <button type="button" onclick="close3DLandmarkBox(); window.resetMapZoom();" class="w-full py-2 rounded-xl bg-brand-gold text-dark-950 font-black text-xs hover:scale-105 transition-all text-center">
+                            ⬅️ رجوع للمسار العام
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 0 Autoroute Watermark -->
+                <div class="absolute bottom-4 left-4 z-10 glass px-3 py-1.5 rounded-xl border border-white/15 text-[11px] font-bold text-gray-300 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>100% مسارات وطنية وجهوية • بدون أوطوروت</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INNOVATION 3D HERITAGE INSPECTOR DRAWER -->
+    <div id="innovation-3d-drawer" class="fixed inset-y-0 left-0 max-w-xl w-full glass-card border-r border-brand-gold/40 z-[999] shadow-2xl transform -translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto">
+        <div class="p-6 sm:p-8">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
+                <div>
+                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-brand-gold font-latin">INSPECTION 3D DU PATRIMOINE</span>
+                    <h3 id="drawer-stop-title" class="text-2xl font-black text-white"></h3>
+                </div>
+                <button type="button" onclick="close3DInspector()" class="w-10 h-10 rounded-full glass text-white flex items-center justify-center font-bold hover:bg-red-600 transition-all">✕</button>
+            </div>
+
+            <!-- Two Visuals: 3D Canvas + Real Photo -->
+            <div class="space-y-4 mb-6">
+                <!-- 3D Canvas Box -->
+                <div class="relative rounded-2xl overflow-hidden border border-brand-gold/40 bg-dark-950">
+                    <div class="absolute top-3 right-3 z-10 bg-dark-950/80 px-2.5 py-1 rounded-md text-[10px] font-bold text-brand-gold border border-brand-gold/30">
+                        🧊 مجسم 3D تفاعلي (دور بالماوس 360°)
+                    </div>
+                    <div id="drawer-3d-canvas-container" style="height: 260px; width: 100%;"></div>
+                </div>
+
+                <!-- Real Photo Box -->
+                <div class="relative rounded-2xl overflow-hidden h-44 border border-white/10">
+                    <img id="drawer-real-img" src="" alt="" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 right-3 text-xs font-bold text-white bg-dark-950/80 px-2.5 py-1 rounded border border-white/20">
+                        📸 الصورة الحقيقية للموقع من الميدان
+                    </span>
+                </div>
+            </div>
+
+            <!-- Challenges Details -->
+            <div class="space-y-4">
+                <div class="bg-amber-950/30 p-4 rounded-xl border border-brand-gold/30">
+                    <span class="text-xs font-extrabold uppercase text-brand-gold block mb-1">🔨 تحدي الصنعة التقليدية:</span>
+                    <h4 id="drawer-craft-title" class="text-base font-black text-white mb-2"></h4>
+                    <p id="drawer-craft-desc" class="text-xs text-gray-300 leading-relaxed mb-2"></p>
+                    <div class="p-2.5 rounded-lg bg-dark-950/80 text-[11px] text-brand-crema border border-brand-gold/20">
+                        <strong>شرط المعلم:</strong> <span id="drawer-craft-rule"></span>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-950/30 p-4 rounded-xl border border-emerald-500/30">
+                    <span class="text-xs font-extrabold uppercase text-emerald-400 block mb-1">🏛️ تحدي المعلم التاريخي:</span>
+                    <h4 id="drawer-hist-title" class="text-base font-black text-white mb-2"></h4>
+                    <p id="drawer-hist-task" class="text-xs text-gray-300 leading-relaxed"></p>
+                    <span class="text-[11px] text-gray-400 block mt-2">الموقع: <strong id="drawer-hist-site" class="text-white"></strong></span>
+                </div>
+
+                <div class="bg-amber-900/20 p-4 rounded-xl border border-brand-crema/30 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-crema/20 flex items-center justify-center text-lg">☕</div>
+                    <div>
+                        <span class="text-xs font-bold text-brand-crema block">استراحة قهوة أسطا (Pause Asta):</span>
+                        <p class="text-[11px] text-gray-300 leading-tight">جلسة شرب قهوة أسطا مع الصانع التقليدي لمناقشة أسرار الحرفة وتكريم التراث المغربي.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+<!-- SECTION: THE 35 STOPS (المحطات الـ 35 عبر المغرب بالتصاور الحقيقية والتحديات) -->
+    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="cities">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">LES 35 ÉTAPES & DÉFIS SIMPLIFIÉS</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
+                    المحطات الـ 35 <span class="text-gradient-gold">والتحديات الميدانية</span>
+                </h2>
+                <p class="text-gray-300 text-base leading-relaxed">
+                    جميع المحطات معروضة بصورها الحقيقية من الإنترنيت + التحديات المبسطة فقط (تحدي الصنعة التقليدية + تحدي المعلم التاريخي). اضغط على زر أي حلقة لعرض محطاتها:
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap gap-2.5 justify-center mb-12">
+                <button onclick="filterStops('all')" class="tab-btn active px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-gold text-dark-950 transition-all">الكل (35 محطة)</button>
+                <button onclick="filterStops(1)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 1: الشمال (5)</button>
+                <button onclick="filterStops(2)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 2: الشرق (6)</button>
+                <button onclick="filterStops(3)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 3: الأطلس (6)</button>
+                <button onclick="filterStops(4)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 4: الساحل (6)</button>
+                <button onclick="filterStops(5)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 5: سوس (6)</button>
+                <button onclick="filterStops(6)" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">حلقة 6: الصحراء (6)</button>
+            </div>
+
+            <!-- 35 Cards Container (Pre-rendered statically so NEVER EMPTY!) -->
+            <div id="stops-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="1" data-id="0">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/asilah.jpg" alt="أصيلة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 1 • المحطة 1
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                أصيلة <span class="text-xs text-gray-300 font-normal font-latin">(Asilah)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ميزان ريشة الجدارية فـ حائط البحر»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«شفرة مدافع برج القمرة على المحيط»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ برج القمرة البرتغالي وسقالة باب البحر</span>
+                <button onclick="openStopModal(0)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="1" data-id="1">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tetouan.jpg" alt="تطوان" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 1 • المحطة 2
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تطوان <span class="text-xs text-gray-300 font-normal font-latin">(Tétouan)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«توريق خشب الزواق الأندلسي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«متاهة الأبواب السبعة فـ حمامة الأندلس»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ أسوار المدينة العتيقة</span>
+                <button onclick="openStopModal(1)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="1" data-id="2">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/chefchaouen.jpg" alt="شفشاون" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 1 • المحطة 3
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                شفشاون <span class="text-xs text-gray-300 font-normal font-latin">(Chefchaouen)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سباق المغزل والشدة الجبلية فـ رأس الماء»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«برج المراقبة فـ قصبة علي بن راشد»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصبة شفشاون العسكرية</span>
+                <button onclick="openStopModal(2)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="1" data-id="3">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/ouazzane.jpg" alt="وزان" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 1 • المحطة 4
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                وزان <span class="text-xs text-gray-300 font-normal font-latin">(Ouazzane)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«إيقاع مكوك المرمة فـ حفرة القشريين»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ساعة المزولة الشمسية بـ الزاوية التهامية»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ الزاوية الوزانية التاريخية وساحة القشريين.</span>
+                <button onclick="openStopModal(3)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="1" data-id="4">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/zerhoun.jpg" alt="مولاي إدريس زرهون" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 1 • المحطة 5
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                مولاي إدريس زرهون <span class="text-xs text-gray-300 font-normal font-latin">(Moulay Driss Zerhoun)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«صب الشمعة الزرهونية الدائرية»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«رسالة قوس كاراكالا من وليلي إلى زرهون»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قوس النصر بمدينة وليلي الرومانية</span>
+                <button onclick="openStopModal(4)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="5">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tifelt.jpg" alt="تيفلت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 6
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تيفلت <span class="text-xs text-gray-300 font-normal font-latin">(Tifelt)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«غرزة الموزون فالزربية الزمورية»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«علامة وشم فرسان قصبة زمور»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ أطلال معبر فرسان قبائل زمور القديم وفضاء التبوريدة.</span>
+                <button onclick="openStopModal(5)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="6">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/fes.jpg" alt="فاس" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 7
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                فاس <span class="text-xs text-gray-300 font-normal font-latin">(Fès)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ضربة المنقاش وتفصيل فرمة الزليج»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ساعة الماء المرينية وسر أبواب القرويين»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ الساعة المائية العجيبة بدار الموقت وقبالة جامع القرويين بفاس البالي.</span>
+                <button onclick="openStopModal(6)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="7">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/bhalil.jpg" alt="البهاليل" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 8
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                البهاليل <span class="text-xs text-gray-300 font-normal font-latin">(Bhalil)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«برمة الحرير وعقدة الصابرة فالكهف»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«متاهة كهوف الحجر الكلسي المعلقة»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ المنازل الكهفية الطبيعية المحفورة فـ صخور الجبل الكلسي</span>
+                <button onclick="openStopModal(7)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="8">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/sefrou.jpg" alt="صفرو" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 9
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                صفرو <span class="text-xs text-gray-300 font-normal font-latin">(Sefrou)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«طرق حدوة الفرس وسندان الحدادين»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سركلو ملاح صفرو وقناطر وادي أگاي»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ الملاح اليهودي العتيق، باب المقام، وقناطر وادي أگاي الحجرية.</span>
+                <button onclick="openStopModal(8)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="9">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/taza.jpg" alt="تازة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 10
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تازة <span class="text-xs text-gray-300 font-normal font-latin">(Taza)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«خط الكحل البارد على طين تازة الجبلي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ثريا الجامع الأعظم وسور ممر تازة»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ الجامع الأعظم بتازة العليا وأسوار المرابطين والموحدين المطلة على الممر.</span>
+                <button onclick="openStopModal(9)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="2" data-id="10">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/oujda.jpg" alt="وجدة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 2 • المحطة 11
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                وجدة <span class="text-xs text-gray-300 font-normal font-latin">(Oujda)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«شك العقيق فـ صدر البلوزة الوجدية»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«حساب بوابات باب سيدي عبد الوهاب»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ باب سيدي عبد الوهاب التاريخي</span>
+                <button onclick="openStopModal(10)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="11">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/azilal.jpg" alt="أزيلال" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 12
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                أزيلال <span class="text-xs text-gray-300 font-normal font-latin">(Azilal)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ضربة الخلالة الحديدية وتسوية سطر الصوف»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«تتبع خطى الديناصورات فـ صخور إيواريضن»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ موقع آثار أقدام الديناصورات الجيولوجي بجيوبارك مڭون</span>
+                <button onclick="openStopModal(11)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="12">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/megdaz.jpg" alt="مڭداز" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 13
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                مڭداز <span class="text-xs text-gray-300 font-normal font-latin">(Megdaz)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«بناء ساروت الحجر المنضود فـ جدار التيغرمت»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«برج مراقبة إيغودار مڭداز المعلق»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ المخازن الجماعية وقصور مڭداز الحجرية المتدرجة بوادي تاساوت.</span>
+                <button onclick="openStopModal(12)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="13">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/ait_benhaddou.jpg" alt="آيت بن حدو" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 14
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                آيت بن حدو <span class="text-xs text-gray-300 font-normal font-latin">(Aït Ben Haddou)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سير الجلد وسقف القصب التاتوي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سباق صعود قمة أكادير القصر وسر قوافل الذهب»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصر آيت بن حدو التاريخي</span>
+                <button onclick="openStopModal(13)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="14">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/taznakht.jpg" alt="تزناخت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 15
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تزناخت <span class="text-xs text-gray-300 font-normal font-latin">(Taznakht)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سر الصباغة بالزعفران وحساب العقدة الواوزگيتية»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«خريطة واحات وادي سيروا ونقوش الصخور»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصبة إداوزدوت القديمة وسفوح جبل سيروا البركاني.</span>
+                <button onclick="openStopModal(14)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="15">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/erfoud.jpg" alt="أرفود" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 16
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                أرفود <span class="text-xs text-gray-300 font-normal font-latin">(Erfoud)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«النقار الهوائي وتحرير قوقعة الأمونيت»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«بوابة قصر المعاضيد وسور الواحة المحصن»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصر المعاضيد</span>
+                <button onclick="openStopModal(15)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="3" data-id="16">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/zagora.jpg" alt="زاكورة وتامكروت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 3 • المحطة 17
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                زاكورة وتامكروت <span class="text-xs text-gray-300 font-normal font-latin">(Zagora & Tamegroute)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«عجلة الطين الدرعاوية وغراف الفخار الزمردي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«مخطوط زاوية تامكروت ولوحة تمبكتو»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ المكتبة التراثية للزاوية الناصرية بتامكروت ونصب "52 يوماً إلى تمبكتو" بزاكورة.</span>
+                <button onclick="openStopModal(16)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="17">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/azemmour.jpg" alt="أزمور" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 18
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                أزمور <span class="text-xs text-gray-300 font-normal font-latin">(Azemmour)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«طرز الفراغ السلبي د أزمور»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«مدافع قصبة أم الربيع وسر مصطفى الزموري»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ أسوار القصبة البرتغالية ومطل دار البارود على نهر أم الربيع.</span>
+                <button onclick="openStopModal(17)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="18">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/safi.jpg" alt="آسفي" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 19
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                آسفي <span class="text-xs text-gray-300 font-normal font-latin">(Safi)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«رسم التواء الطاووس على صحن الخزف المسفيوي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«برج قصر البحر وصخور المد البحري»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصر البحر</span>
+                <button onclick="openStopModal(18)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="19">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/essaouira.jpg" alt="الصويرة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 20
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                الصويرة <span class="text-xs text-gray-300 font-normal font-latin">(Essaouira)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ترصيع عظم الجمل فـ خشب العرعار»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«متاهة سقالة الميناء وباب المهدية»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ سقالة الميناء</span>
+                <button onclick="openStopModal(19)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="20">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/imsouane.jpg" alt="إمسوان" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 21
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                إمسوان <span class="text-xs text-gray-300 font-normal font-latin">(Imsouane)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«قلفطة لوح الفلوكة بقطران البحر»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«منارة الجرف الصخري ومرفأ قبائل حاحة»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ المرفأ التقليدي العتيق والمطل الصخري لخليج الكاتدرائية.</span>
+                <button onclick="openStopModal(20)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="21">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tamri.jpg" alt="تامري" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 22
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تامري <span class="text-xs text-gray-300 font-normal font-latin">(Tamri)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«حياكة سباطة عراجين الموز بالدوم»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«كهوف المراقبة القديمة بمصب وادي تامري»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ أطلال مخازن المراقبة الساحلية القديمة المحفورة فـ أجراف الوادي.</span>
+                <button onclick="openStopModal(21)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="4" data-id="22">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/taghazout.jpg" alt="تاغازوت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 4 • المحطة 23
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تاغازوت <span class="text-xs text-gray-300 font-normal font-latin">(Taghazout)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«إبرة رتق شباك الصول فـ صخرة الشاطئ»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«صخرة رأس أنكور بوينت التاريخية»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ رأس صخرة أنكور</span>
+                <button onclick="openStopModal(22)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="23">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/taliouine.jpg" alt="تاليوين" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 24
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تاليوين <span class="text-xs text-gray-300 font-normal font-latin">(Taliouine)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ماراطون الأظافر وتجريد شعيرات الزعفران»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«أبراج قصبة الكلاوي الشامخة بجبل سيروا»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصبة الباشا التهامي الكلاوي بتاليوين</span>
+                <button onclick="openStopModal(23)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="24">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/taroudant.jpg" alt="تارودانت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 25
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تارودانت <span class="text-xs text-gray-300 font-normal font-latin">(Taroudant)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«نقش شفرة التزرزيت السوسية بالمبرد»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«طواف أبراج أسوار السعديين بباب الزركان»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ أسوار تارودانت العظيمة</span>
+                <button onclick="openStopModal(24)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="25">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tizourgane.jpg" alt="قصبة تيزورڭان" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 26
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                قصبة تيزورڭان <span class="text-xs text-gray-300 font-normal font-latin">(Kasbah Tizourgane)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«نجارة قفل الباب الخشبي المقوس»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«الباب الوحيد لحصن تيزورڭان المعلق»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ القرية المحصنة تيزورڭان</span>
+                <button onclick="openStopModal(25)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="26">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/agadir_inoumar.jpg" alt="أڭادير إنومار" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 27
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                أڭادير إنومار <span class="text-xs text-gray-300 font-normal font-latin">(Agadir Inoumar)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«لغز مفتاح الساروت الخشبي للأقدم بنك»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«لغز لوح وقوانين إيغودار بعهد إسماعيل»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ حصن أڭادير إنومار</span>
+                <button onclick="openStopModal(26)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="27">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tafraout.jpg" alt="تافراوت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 28
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تافراوت <span class="text-xs text-gray-300 font-normal font-latin">(Tafraout)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«تخريم جلد البلغة التافراوتية بالمخرز»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«صخرة رأس الأسد بوادي أملن»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قرية أومسنات الأثرية وصخرة "قبعة نابليون" بالصخور الوردية.</span>
+                <button onclick="openStopModal(27)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="5" data-id="28">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tiznit.jpg" alt="تيزنيت" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 5 • المحطة 29
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                تيزنيت <span class="text-xs text-gray-300 font-normal font-latin">(Tiznit)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«شعلة النار وتلوين المينا الفضية»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«سر العين الزرقاء وأسوار مولاي الحسن»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ العين الزرقاء</span>
+                <button onclick="openStopModal(28)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="29">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/guelmim.jpg" alt="كلميم" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 30
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                كلميم <span class="text-xs text-gray-300 font-normal font-latin">(Guelmim)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«دق مسامير النحاس فـ راحلة الإبل»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«ملتقى قوافل واد نون بواحة تيغمرت»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ قصبة تيغمرت الطينية ونظام خطارات السقي الصحراوي.</span>
+                <button onclick="openStopModal(29)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="30">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tantan.jpg" alt="طانطان" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 31
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                طانطان <span class="text-xs text-gray-300 font-normal font-latin">(Tan-Tan)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«حفر تجويف گدحة اللبن بقدوم خشب الطلح»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«نصب وادي درعة قبالة الشاطئ الأبيض»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ مصب وادي درعة التاريخي وجروف الشاطئ الأبيض</span>
+                <button onclick="openStopModal(30)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="31">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/naila.jpg" alt="لاڭون نايلة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 32
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                لاڭون نايلة <span class="text-xs text-gray-300 font-normal font-latin">(Khnifiss)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«مكواة بلورات الملح فـ سبخة تازرا»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«برج أگووتيت وسط كثبان لاڭون نايلة»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ برج أگووتيت الأثري والمحمية الرطبة لمنتزه خنيفيس.</span>
+                <button onclick="openStopModal(31)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="32">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/tah.jpg" alt="طاح" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 33
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                طاح <span class="text-xs text-gray-300 font-normal font-latin">(Tah)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«رتق وخياطة شكوة اللبن بسير الجلد»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«نصب المسيرة الخضراء فـ أعمق سبخة»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ نصب المسيرة الخضراء ومنخفض سبخة طاح</span>
+                <button onclick="openStopModal(32)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="33">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/laayoune.jpg" alt="العيون" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 34
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                العيون <span class="text-xs text-gray-300 font-normal font-latin">(Laâyoune)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«قلبة الرزة العالية فـ كاس الشاي الصحراوي»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«أقواس ساحة المشور ومنخفض الساقية الحمراء»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ ساحة المشور الكبرى والكاتدرائية الإسبانية القديمة</span>
+                <button onclick="openStopModal(33)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="stop-card glass-card rounded-2xl overflow-hidden flex flex-col" data-episode="6" data-id="34">
+        <div class="relative h-48 overflow-hidden">
+            <img src="images/dakhla.jpg" alt="الداخلة" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent opacity-80"></div>
+            <span class="absolute top-3 right-3 bg-[#0c0b0a]/85 backdrop-blur-md border border-[#C8A951]/40 text-[#C8A951] text-xs px-2.5 py-1 rounded-md font-bold">
+                الحلقة 6 • المحطة 35
+            </span>
+            <span class="absolute bottom-2 right-3 text-white text-lg font-black drop-shadow-md">
+                الداخلة <span class="text-xs text-gray-300 font-normal font-latin">(Dakhla)</span>
+            </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+                <!-- Craft Challenge -->
+                <div class="bg-amber-950/20 border border-[#C8A951]/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-[#C8A951]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#C8A951]">تحدي الصنعة</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«فتح محار اللاڭون وربط غراف الأخطبوط»</div>
+                </div>
+
+                <!-- Historical Challenge -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                    <div class="flex items-center gap-2 mb-1">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                    </div>
+                    <div class="text-sm font-bold text-white leading-snug">«منارة آرخيبيلاغو والكثيب الأبيض»</div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                <span class="text-gray-400 truncate max-w-[170px]">🏛️ منارة كاب دومفورد</span>
+                <button onclick="openStopModal(34)" class="px-3 py-1.5 rounded-lg bg-[#C8A951]/20 hover:bg-[#C8A951] text-[#C8A951] hover:text-[#0c0b0a] font-bold transition-all text-xs border border-[#C8A951]/40">
+                    التفاصيل 🔍
+                </button>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: RULES (القواعد الـ 8 الصارمة) -->
+    <section class="py-24 relative bg-dark-950 border-t border-white/10" id="rules">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">LES 8 RÈGLES OFFICIELLES DU JEU</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
+                    قواعد اللعب الصارمة <span class="text-gradient-gold">للعدالة والنزاهة</span>
+                </h2>
+                <p class="text-gray-300 text-base leading-relaxed">
+                    قواعد موحدة تطبق بالتساوي على جميع المتسابقين لضمان الروح الرياضية وتكافؤ الفرص في كل مسار.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-brand-gold font-mono block mb-3">01</span>
+                    <h4 class="text-lg font-bold text-white mb-2">نفس نقطة البداية</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">الانطلاق في نفس التوقيت من أمام معرض Renault Top Auto المحمدية مع شرح القواعد وتسليم التعليمات.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-red-400 font-mono block mb-3">02</span>
+                    <h4 class="text-lg font-bold text-white mb-2">0 هواتف و 0 تكنولوجيا</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">سحب الهواتف الشخصية والـ GPS في بداية الحلقة. التواصل محصور في جهاز Walkie-Talkie مخصص للطوارئ.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-brand-crema font-mono block mb-3">03</span>
+                    <h4 class="text-lg font-bold text-white mb-2">الخريطة الورقية وحدها</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">خريطة المغرب الورقية هي وسيلة الملاحة الوحيدة المتاحة لتحديد المسارات، القرى، ونقاط الالتقاء.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-blue-400 font-mono block mb-3">04</span>
+                    <h4 class="text-lg font-bold text-white mb-2">سؤال الساكنة المحلية</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">التواصل مع السكان وأولاد البلاد في الأسواق والمقاهي هو الطريقة الوحيدة لمعرفة أقصر الطرق ووسائل النقل.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-emerald-400 font-mono block mb-3">05</span>
+                    <h4 class="text-lg font-bold text-white mb-2">ميزانية نقل متطابقة</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">يتسلم كل متسابق نفس المبلغ المالي المحدد والمدروس بدقة لتغطية تذاكر النقل الشعبي البسيط فقط.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-amber-400 font-mono block mb-3">06</span>
+                    <h4 class="text-lg font-bold text-white mb-2">النقل الشعبي فقط</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">استعمال الطاكسي الكبير، حافلات القرى، النقل المزدوج، أو المشي. ممنوع سيارات الأقارب أو السيارات الخاصة.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-purple-400 font-mono block mb-3">07</span>
+                    <h4 class="text-lg font-bold text-white mb-2">ممنوع الأوطوروت نهائياً</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">السفر حصري عبر الطرق الوطنية (N)، الإقليمية (P)، والجهوية (R) لضمان تجربة السفر الحقيقي واكتشاف القرى.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/10">
+                    <span class="text-3xl font-black text-pink-400 font-mono block mb-3">08</span>
+                    <h4 class="text-lg font-bold text-white mb-2">تحكيم المعلم الصارم</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">لا يعتبر التحدي مكتملاً ولا يحق للمتسابق متابعة طريقه حتى يوافق المعلم الحرفي على جودة القطعة المصنوعة.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: BTS & PRODUCTION (كواليس الإنتاج وجودة 4K) -->
+    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="bts">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">BEHIND THE SCENES & PRODUCTION QUALITY</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
+                    كواليس الإنتاج <span class="text-gradient-gold">وجودة التصوير السينمائي 4K</span>
+                </h2>
+                <p class="text-gray-300 text-base leading-relaxed">
+                    طاقم تصوير خفيف ومحترف يوثق كل لحظة بأعلى المعايير العالمية التي تليق بصورة الرعاة الكبار.
+                </p>
+            </div>
+
+            <!-- 4 BTS Real Photos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="images/pitch/prod_drone_cam.jpg" alt="تصوير سينمائي بالدرون" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-dark-950/85 text-brand-gold text-xs px-2.5 py-1 rounded font-bold border border-brand-gold/30">Drone 4K Cinema</span>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="text-base font-bold text-white mb-2">مشاهد جوية بانورامية</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">لقطات درون تحبس الأنفاس توثق جمال القصبات الطينية، قمم الأطلس، والشواطئ الأطلسية الساحرة.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="images/pitch/prod_camera_crew.jpg" alt="طاقم التصوير الميداني" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-dark-950/85 text-white text-xs px-2.5 py-1 rounded font-bold border border-white/30">فريق رشيق</span>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="text-base font-bold text-white mb-2">فريق كاميرا محترف</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">كاميرات سينمائية خفيفة تلاحق المتسابقين في الأسواق ووسائل النقل دون تعطيل العفوية وردود الفعل الحقيقية.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="images/pitch/prod_desert_camp.jpg" alt="مخيم الإنتاج واللوجستيك" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-dark-950/85 text-amber-400 text-xs px-2.5 py-1 rounded font-bold border border-amber-400/30">معسكرات الميدان</span>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="text-base font-bold text-white mb-2">لوجستيك ومخيمات الميدان</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">خيام مجهزة، أجهزة أمان، وتجهيزات اتصالات لضمان سلامة الطاقم والمتسابقين في أبعد النقاط الجغرافية.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="images/pitch/media_smartphone_vlog.jpg" alt="إنتاج محتوى رقمي وريلز" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-dark-950/85 text-pink-400 text-xs px-2.5 py-1 rounded font-bold border border-pink-400/30">Social First</span>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="text-base font-bold text-white mb-2">تغطية فورية وسطوريات</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">نشر فوري لكواليس التصوير واستطلاعات الرأي اليومية لإشعال الفضول والتفاعل قبل عرض الحلقات الكاملة.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: BUDGET & DISTRIBUTION (الميزانية وخطة البث من موقع لوفابل) -->
+    <section class="py-24 relative bg-dark-950 border-t border-white/10" id="budget">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">BUDGET GLOBAL & PLAN MÉDIA</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
+                    الميزانية التقديرية <span class="text-gradient-gold">وخطة البث الرقمي</span>
+                </h2>
+                <p class="text-gray-300 text-base leading-relaxed">
+                    6 حلقات • إنتاج • لوجستيك • تنقلات • إيواء • حضور مستمر لمدة شهر ونصف على منصات التواصل.
+                </p>
+            </div>
+
+            <!-- Numbers Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <div class="glass p-6 rounded-2xl text-center border border-white/10">
+                    <div class="text-4xl font-black text-brand-gold font-mono mb-2">6</div>
+                    <div class="text-sm font-bold text-white">حلقات يوتيوب رئيسية</div>
+                    <div class="text-xs text-gray-400 mt-1">45-60 دقيقة بجودة 4K</div>
+                </div>
+
+                <div class="glass p-6 rounded-2xl text-center border border-white/10">
+                    <div class="text-4xl font-black text-brand-crema font-mono mb-2">18</div>
+                    <div class="text-sm font-bold text-white">فيديو Reel & Shorts أصلي</div>
+                    <div class="text-xs text-gray-400 mt-1">3 ريلز لكل حلقة عبر Collab</div>
+                </div>
+
+                <div class="glass p-6 rounded-2xl text-center border border-white/10">
+                    <div class="text-4xl font-black text-emerald-400 font-mono mb-2">60+</div>
+                    <div class="text-sm font-bold text-white">سطوري إنستغرام</div>
+                    <div class="text-xs text-gray-400 mt-1">تاغ رسمي للرعاة وتفاعل يومي</div>
+                </div>
+
+                <div class="glass p-6 rounded-2xl text-center border border-white/10">
+                    <div class="text-4xl font-black text-blue-400 font-mono mb-2">199,000</div>
+                    <div class="text-sm font-bold text-white">درهم ميزانية الموسم بالكامل</div>
+                    <div class="text-xs text-gray-400 mt-1">شاملة لكافة تكاليف الإنتاج</div>
+                </div>
+            </div>
+
+            <!-- Budget Breakdown Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <div class="glass-card p-6 rounded-2xl">
+                    <span class="text-xs text-brand-crema font-bold uppercase font-latin block mb-1">POSTE 1</span>
+                    <h4 class="text-lg font-bold text-white mb-2">المحروقات (Carburant)</h4>
+                    <div class="text-2xl font-black text-brand-gold font-mono mb-2">10,000 DH</div>
+                    <p class="text-xs text-gray-400 leading-relaxed">ميزانية تقديرية للوقود لكامل رحلة الاستكشاف عبر ربوع المملكة.</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <span class="text-xs text-brand-crema font-bold uppercase font-latin block mb-1">POSTE 2</span>
+                    <h4 class="text-lg font-bold text-white mb-2">الإطعام (Restauration)</h4>
+                    <div class="text-2xl font-black text-brand-gold font-mono mb-2">18,000 DH</div>
+                    <p class="text-xs text-gray-400 leading-relaxed">وجبات غذائية وتغذية الفريق والضيوف طيلة أيام التصوير والسفر.</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <span class="text-xs text-brand-crema font-bold uppercase font-latin block mb-1">POSTE 3</span>
+                    <h4 class="text-lg font-bold text-white mb-2">الإيواء (Hébergement)</h4>
+                    <div class="text-2xl font-black text-brand-gold font-mono mb-2">21,000 DH</div>
+                    <p class="text-xs text-gray-400 leading-relaxed">فنادق، رياضات، ودور ضيافة تقليدية للإقامة أثناء السفر والتنقل.</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <span class="text-xs text-brand-crema font-bold uppercase font-latin block mb-1">POSTE 4</span>
+                    <h4 class="text-lg font-bold text-white mb-2">إنتاج الحلقات الـ 6</h4>
+                    <div class="text-2xl font-black text-brand-gold font-mono mb-2">150,000 DH</div>
+                    <p class="text-xs text-gray-400 leading-relaxed">25,000 DH × 6 حلقات (تصوير، مونتاج 4K، معدات وصوت ومحتوى رقمي).</p>
+                </div>
+            </div>
+
+            <!-- Payment terms -->
+            <div class="glass p-6 rounded-2xl border border-brand-gold/30 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-right">
+                <div>
+                    <h4 class="text-lg font-bold text-white">شروط الدفع الرسمية (Modalités de Paiement):</h4>
+                    <p class="text-xs text-gray-400 mt-1">50% دفعة أولى قبل انطلاق التصوير (99,500 DH) • 50% دفعة ثانية بعد نشر وتسليم المشروع (99,500 DH)</p>
+                </div>
+                <div class="text-brand-crema font-bold text-sm bg-amber-950/40 px-4 py-2 rounded-xl border border-brand-crema/30 font-latin">
+                    TOTAL: 199,000 MAD
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: PARTICIPATE / CONTACT FORM (شارك معنا أو تواصل معنا) -->
+    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="participate">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">INSCRIPTION & CONTACT PARTENAIRES</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mb-4">
+                    واش قادر على <span class="text-gradient-gold text-shimmer">«تحدي المليون»؟</span>
+                </h2>
+                <p class="text-gray-300 text-sm sm:text-base">
+                    إيلا كنت باغي تشارك كمتسابق فـ إحدى الحلقات، أو كنتي ممثل لشركة وباغي تنضم لشركاء المغامرة، عمر المعلومات ديالك:
+                </p>
+            </div>
+
+            <div class="glass-card p-8 sm:p-10 rounded-3xl border border-brand-gold/30">
+                <form onsubmit="event.preventDefault(); alert('شكراً على اهتمامكم! تم تسجيل طلبكم بنجاح وسيتواصل معكم فريق الإنتاج قريباً.');" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-2">الاسم الكامل *</label>
+                            <input type="text" required placeholder="مثال: يوسف العلمي" class="w-full px-4 py-3 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-2">المدينة الأصلية *</label>
+                            <input type="text" required placeholder="مثال: فاس / تطوان / الدار البيضاء" class="w-full px-4 py-3 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-2">رقم الهاتف والواتساب *</label>
+                            <input type="tel" required placeholder="06XXXXXXXX" class="w-full px-4 py-3 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm text-left font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-2">الصفة *</label>
+                            <select class="w-full px-4 py-3 rounded-xl bg-dark-950/80 border border-white/10 text-white focus:outline-none focus:border-brand-gold text-sm">
+                                <option value="candidate">أرغب في المشاركة كمتسابق(ة)</option>
+                                <option value="sponsor">ممثل شركة راعية (Sponsor / Partenaire)</option>
+                                <option value="media">تغطية إعلامية وصحفية</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-2">علاش باغي تشارك أو فكرة الشراكة المقترحة؟</label>
+                        <textarea rows="4" placeholder="كتب لينا باختصار تجربتك مع السفر بلا تكنولوجيا أو كيفاش باغي تدعم البرنامج..." class="w-full px-4 py-3 rounded-xl bg-dark-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm"></textarea>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <button type="submit" class="px-10 py-4 rounded-xl bg-gradient-to-r from-brand-crema to-brand-gold text-dark-950 font-black text-base shadow-xl hover:scale-105 transition-all w-full sm:w-auto">
+                            إرسال الطلب الآن 🚀
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 bg-dark-950 py-12 text-center text-sm text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="font-extrabold text-lg text-brand-gold">«تحدي المليون»</span>
+                <span class="text-xs font-latin">© 2026 Tous droits réservés</span>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center gap-6 text-xs text-gray-400">
+                <span>Café Asta (قهوة أسطا)</span>
+                <span>•</span>
+                <span>Renault Top Auto Mohammedia</span>
+                <span>•</span>
+                <span>Dacia Bigster Hybrid</span>
+                <span>•</span>
+                <span>Fayssal Vlog</span>
+            </div>
+
+            <div class="text-xs text-gray-500 font-latin">
+                Moroccan Adventure & Heritage Series
+            </div>
+        </div>
+    </footer>
+
+<!-- STOP DETAILS MODAL -->
+    <div id="stopModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="glass-card max-w-2xl w-full rounded-3xl overflow-hidden border border-brand-gold/40 shadow-2xl relative max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="relative h-56 overflow-hidden">
+                <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#121110] via-transparent to-transparent"></div>
+                <button onclick="closeStopModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-dark-950/80 text-white flex items-center justify-center font-bold hover:bg-red-600 transition-all">✕</button>
+                <div class="absolute bottom-4 right-6 left-6">
+                    <span id="modalEp" class="text-xs font-bold text-brand-gold uppercase tracking-wider block font-latin"></span>
+                    <h3 id="modalTitle" class="text-3xl font-black text-white"></h3>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8 space-y-6">
+                <!-- Craft Box -->
+                <div class="bg-amber-950/20 border border-brand-gold/30 rounded-2xl p-5">
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        <h4 class="text-sm font-extrabold uppercase text-brand-gold">تحدي الصنعة التقليدية</h4>
+                    </div>
+                    <div id="modalCraftChallenge" class="text-lg font-black text-white mb-2"></div>
+                    <p id="modalCraftTask" class="text-xs text-gray-300 leading-relaxed mb-3"></p>
+                    <div class="p-3 rounded-xl bg-dark-950/60 border border-brand-gold/20 text-xs text-brand-crema">
+                        <strong>شرط المعلم الصارم:</strong> <span id="modalCraftRule"></span>
+                    </div>
+                </div>
+
+                <!-- Historical Monument Box -->
+                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-2xl p-5">
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <h4 class="text-sm font-extrabold uppercase text-emerald-400">تحدي المعلم التاريخي</h4>
+                    </div>
+                    <div id="modalHistChallenge" class="text-lg font-black text-white mb-2"></div>
+                    <p id="modalHistTask" class="text-xs text-gray-300 leading-relaxed mb-3"></p>
+                    <div class="p-3 rounded-xl bg-dark-950/60 border border-emerald-500/20 text-xs text-emerald-300">
+                        <strong>المعلم:</strong> <span id="modalHistSite"></span>
+                    </div>
+                </div>
+
+                <!-- History Story -->
+                <div class="p-4 rounded-2xl bg-dark-950/40 border border-white/10 text-xs text-gray-400 leading-relaxed">
+                    <strong class="text-white block mb-1">القصة والهوية:</strong>
+                    <span id="modalStory"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- EXTERNAL DATA & 3D MAP ENGINE -->
+    <script src="presentation_data.js?v=3"></script>
+    <script src="map_3d_engine.js?v=3"></script>
+
+    <!-- INDEX MODAL & CARDS FILTER LOGIC -->
+    <script>
+        function filterStops(ep) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-gold', 'text-dark-950');
+                btn.classList.add('glass', 'text-gray-300');
+            });
+
+            const cards = document.querySelectorAll('.stop-card');
+            cards.forEach(card => {
+                if (ep === 'all' || card.getAttribute('data-episode') == ep) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openStopModal(id) {
+            const activeStops = window.STOPS_DATA || [];
+            const stop = activeStops.find(s => s.id === id);
+            if (!stop) return;
+
+            document.getElementById('modalImg').src = stop.image;
+            document.getElementById('modalEp').textContent = `الحلقة ${stop.episode} • ${stop.episode_name || ''}`;
+            document.getElementById('modalTitle').textContent = stop.full_name || stop.name;
+            
+            document.getElementById('modalCraftChallenge').textContent = `«${stop.craft_challenge}»`;
+            document.getElementById('modalCraftTask').textContent = stop.craft_task;
+            document.getElementById('modalCraftRule').textContent = stop.craft_rule;
+
+            document.getElementById('modalHistChallenge').textContent = `«${stop.hist_challenge}»`;
+            document.getElementById('modalHistTask').textContent = stop.hist_task;
+            document.getElementById('modalHistSite').textContent = stop.hist_site;
+
+            document.getElementById('modalStory').textContent = stop.story;
+
+            document.getElementById('stopModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStopModal() {
+            document.getElementById('stopModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'stopModal') {
+                closeStopModal();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initMasterMap) window.initMasterMap();
+        });
+    </script>
+    <!-- DYNAMIC VISUAL EFFECTS & MOTION SUITE -->
+    <script src="dynamic_effects.js"></script>
+</body>
+</html>
