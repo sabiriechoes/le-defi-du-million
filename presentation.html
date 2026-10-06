@@ -183,7 +183,6 @@
     </style>
     <!-- Three.js 3D WebGL Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="map_3d_engine.js?v=2"></script>
 </head>
 <body class="selection:bg-brand-gold selection:text-dark-950">
 
@@ -508,12 +507,12 @@
 
             <!-- Episode Selector Tabs -->
             <div class="flex flex-wrap gap-3 justify-center mb-12">
-                <button onclick="showEpisodeCards(1)" class="ep-tab-btn active px-6 py-3 rounded-xl text-sm font-bold bg-brand-gold text-dark-950 transition-all">الحلقة 1: الشمال (5 محطات)</button>
-                <button onclick="showEpisodeCards(2)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 2: الشرق (6 محطات)</button>
-                <button onclick="showEpisodeCards(3)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 3: الأطلس (6 محطات)</button>
-                <button onclick="showEpisodeCards(4)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 4: الساحل (6 محطات)</button>
-                <button onclick="showEpisodeCards(5)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 5: سوس (6 محطات)</button>
-                <button onclick="showEpisodeCards(6)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 6: الصحراء (6 محطات)</button>
+                <button id="ep-tab-1" onclick="showEpisodeCards(1)" class="ep-tab-btn active px-6 py-3 rounded-xl text-sm font-bold bg-brand-gold text-dark-950 transition-all">الحلقة 1: الشمال (5 محطات)</button>
+                <button id="ep-tab-2" onclick="showEpisodeCards(2)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 2: الشرق (6 محطات)</button>
+                <button id="ep-tab-3" onclick="showEpisodeCards(3)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 3: الأطلس (6 محطات)</button>
+                <button id="ep-tab-4" onclick="showEpisodeCards(4)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 4: الساحل (6 محطات)</button>
+                <button id="ep-tab-5" onclick="showEpisodeCards(5)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 5: سوس (6 محطات)</button>
+                <button id="ep-tab-6" onclick="showEpisodeCards(6)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 6: الصحراء (6 محطات)</button>
             </div>
 
             <!-- Episode Summary Header -->

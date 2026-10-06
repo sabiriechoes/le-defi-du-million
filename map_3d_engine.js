@@ -322,6 +322,15 @@ function close3DLandmarkBox() {
         overlay.classList.add('hidden');
     }
 }
+window.close3DLandmarkBox = close3DLandmarkBox;
+
+function close3DInspector() {
+    const drawer = document.getElementById('innovation-3d-drawer');
+    if (drawer) {
+        drawer.classList.add('-translate-x-full');
+    }
+}
+window.close3DInspector = close3DInspector;
 
 function zoomToStopAnd3D(stopId) {
     const stopsData = window.STOPS_DATA || [];
@@ -339,6 +348,7 @@ function zoomToStopAnd3D(stopId) {
         show3DLandmarkAt(stop);
     }, 1200);
 }
+window.zoomToStopAnd3D = zoomToStopAnd3D;
 
 // ==========================================
 // 3. MASTER MAP CONTROLLER & HIGHLIGHTED ROUTES
