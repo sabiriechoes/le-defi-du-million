@@ -19,20 +19,27 @@
             theme: {
                 extend: {
                     colors: {
-                        dark: {
-                            950: '#0c0b0a',
-                            900: '#121110',
-                            850: '#161513',
-                            800: '#1c1a17',
-                            700: '#26231f'
+                        sand: {
+                            50: '#FAF8F5',
+                            100: '#F4EFEA',
+                            200: '#E8DFD5',
+                            300: '#D8C9B9'
                         },
+                        charcoal: {
+                            900: '#171614',
+                            800: '#23211D',
+                            700: '#34312B',
+                            600: '#524E46',
+                            500: '#757065'
+                        },
+                        warmwhite: '#FFFFFF',
                         brand: {
-                            crema: '#D4A373',
-                            terra: '#E29578',
-                            gold: '#C8A951',
-                            red: '#8B1A1A',
-                            espresso: '#3C2F2F',
-                            sand: '#F5E6CC'
+                            terracotta: '#BC5D3B',
+                            terracottaDark: '#984323',
+                            brass: '#A68238',
+                            brassLight: '#C7A75C',
+                            crema: '#C78C5E',
+                            espresso: '#231B16'
                         }
                     },
                     fontFamily: {
@@ -45,61 +52,74 @@
         }
     </script>
     <style>
+        :root {
+            --bg-page: #FAF8F5;
+            --text-main: #171614;
+            --text-muted: #524E46;
+            --border-subtle: #E8DFD5;
+            --accent-terracotta: #BC5D3B;
+            --accent-brass: #A68238;
+        }
         body {
-            background-color: #0c0b0a;
-            color: #FAFAFA;
+            background-color: #FAF8F5;
+            color: #171614;
             font-family: 'Tajawal', sans-serif;
             overflow-x: hidden;
+            line-height: 1.65;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Cairo', sans-serif;
+            letter-spacing: -0.01em;
+            color: #171614;
         }
-        .glass {
-            background: rgba(22, 21, 19, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(212, 163, 115, 0.15);
+        .editorial-nav {
+            background: rgba(250, 248, 245, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E8DFD5;
         }
-        .glass-card {
-            background: linear-gradient(145deg, rgba(30, 28, 25, 0.90) 0%, rgba(18, 17, 16, 0.96) 100%);
-            border: 1px solid rgba(212, 163, 115, 0.18);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        .editorial-card {
+            background: #FFFFFF;
+            border: 1px solid #E8DFD5;
+            border-radius: 1rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
-        .glass-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(200, 169, 81, 0.5);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85), 0 0 25px rgba(200, 169, 81, 0.18);
+        .editorial-card:hover {
+            transform: translateY(-3px);
+            border-color: #D8C9B9;
+            box-shadow: 0 12px 30px -10px rgba(35, 33, 29, 0.08);
         }
-        .text-gradient-gold {
-            background: linear-gradient(to left, #F5E6CC, #C8A951, #D4A373);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .editorial-dark-card {
+            background: #1F1D19;
+            border: 1px solid #34312B;
+            border-radius: 1rem;
+            color: #FAF8F5;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .text-gradient-coffee {
-            background: linear-gradient(to left, #E29578, #D4A373);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .editorial-dark-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.35);
         }
         /* Custom Leaflet Map Styling */
         #morocco-satellite-map {
             width: 100%;
-            height: 640px;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.9);
-            border: 1px solid rgba(200, 169, 81, 0.3);
+            height: 620px;
+            border-radius: 1.25rem;
+            border: 1px solid #E8DFD5;
+            box-shadow: 0 10px 30px -10px rgba(35, 33, 29, 0.12);
             z-index: 10;
         }
         .leaflet-popup-content-wrapper {
-            background: #181715 !important;
-            color: #fff !important;
+            background: #1F1D19 !important;
+            color: #FAF8F5 !important;
             border-radius: 12px !important;
-            border: 1px solid #C8A951 !important;
+            border: 1px solid #A68238 !important;
             font-family: 'Tajawal', sans-serif !important;
             padding: 4px !important;
         }
         .leaflet-popup-tip {
-            background: #181715 !important;
-            border: 1px solid #C8A951 !important;
+            background: #1F1D19 !important;
+            border: 1px solid #A68238 !important;
         }
         .leaflet-container {
             font-family: 'Tajawal', sans-serif !important;
@@ -111,67 +131,52 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            color: #000;
+            color: #fff;
             font-weight: 800;
             font-size: 11px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.8), 0 0 8px currentColor;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.35);
             border: 2px solid #fff;
             transition: transform 0.2s;
         }
         .custom-map-marker:hover {
-            transform: scale(1.3);
+            transform: scale(1.25);
         }
         .card-img-container {
             position: relative;
             height: 200px;
             overflow: hidden;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
+            border-top-left-radius: 0.95rem;
+            border-top-right-radius: 0.95rem;
+            background: #E8DFD5;
         }
         .card-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.5s ease;
         }
-        .glass-card:hover .card-img-container img {
-            transform: scale(1.08);
+        .editorial-card:hover .card-img-container img,
+        .editorial-dark-card:hover .card-img-container img {
+            transform: scale(1.04);
         }
         .reveal {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: all 0.7s ease-out;
+            opacity: 1;
+            transform: translateY(0);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0c0b0a; }
-        ::-webkit-scrollbar-thumb { background: #3C2F2F; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #D4A373; }
-    
-        /* DYNAMIC MOTION & CINEMATIC EFFECTS */
-        .text-shimmer {
-            background: linear-gradient(90deg, #F5E6CC 0%, #D4A373 50%, #C8A951 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        @keyframes pulseBorder {
-            0%, 100% { border-color: rgba(200, 169, 81, 0.3); box-shadow: 0 0 15px rgba(200, 169, 81, 0.1); }
-            50% { border-color: rgba(200, 169, 81, 0.7); box-shadow: 0 0 25px rgba(200, 169, 81, 0.35); }
-        }
-        .pulse-gold {
-            animation: pulseBorder 3s ease-in-out infinite;
-        }
-        @keyframes floatBadge {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
-        }
-        .floating-badge {
-            animation: floatBadge 3.5s ease-in-out infinite;
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: #FAF8F5; }
+        ::-webkit-scrollbar-thumb { background: #D8C9B9; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A68238; }
+        
+        /* Focus state accessibility */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 2px solid #BC5D3B;
+            outline-offset: 3px;
         }
     </style>
     <!-- Three.js 3D WebGL Engine -->
@@ -179,123 +184,113 @@
 </head>
 <body class="selection:bg-brand-gold selection:text-dark-950">
 
-    <!-- Top Navigation Bar -->
-    <nav class="fixed w-full z-50 glass top-0 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-3">
-                    <span class="font-extrabold text-2xl tracking-wider text-brand-gold">«تحدي المليون»</span>
-                    <span class="text-xs text-gray-400 font-latin uppercase tracking-widest hidden sm:inline">| Le Défi du Million</span>
+    <!-- Top Navigation Bar (Editorial Sand & Charcoal) -->
+    <nav class="sticky w-full z-50 editorial-nav top-0 transition-all duration-200" id="navbar">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#concept-section" class="flex items-center gap-2 text-charcoal-900 min-w-0">
+                    <span class="font-black text-base sm:text-xl md:text-2xl tracking-tight text-charcoal-900 whitespace-nowrap">«تحدي المليون»</span>
+                    <span class="text-xs text-charcoal-600 font-latin hidden md:inline border-r border-charcoal-600/30 pr-2.5 mr-1">Le Défi du Million</span>
+                </a>
+
+                <div class="hidden lg:flex items-center gap-7 text-xs font-bold text-charcoal-700">
+                    <a href="#concept-section" class="hover:text-brand-terracotta transition-colors">الرؤية والبرنامج</a>
+                    <a href="#map-section" class="hover:text-brand-terracotta transition-colors">خريطة المسارات</a>
+                    <a href="#episodes-section" class="hover:text-brand-terracotta transition-colors">المحطات (35)</a>
+                    <a href="#asta-section" class="hover:text-brand-terracotta transition-colors">الشريك: قهوة أسطا</a>
+                    <a href="#bigster-section" class="hover:text-brand-terracotta transition-colors">Dacia Bigster</a>
+                    <a href="#bts-section" class="hover:text-brand-terracotta transition-colors">الإنتاج 4K</a>
+                    <a href="#media-roi-section" class="hover:text-brand-terracotta transition-colors">خطة الرعاية</a>
                 </div>
 
-                <div class="hidden lg:flex items-center gap-6 text-sm font-semibold text-gray-300">
-                    <a href="#concept-section" class="hover:text-brand-gold transition-colors">الكونسيبت</a>
-                    <a href="#map-section" class="hover:text-brand-gold transition-colors">خريطة المسارات</a>
-                    <a href="#episodes-section" class="hover:text-brand-gold transition-colors">المحطات الـ 35</a>
-                    <a href="#asta-section" class="hover:text-brand-crema transition-colors text-brand-crema font-bold">قهوة أسطا (Asta)</a>
-                    <a href="#bigster-section" class="hover:text-brand-gold transition-colors">Dacia Bigster</a>
-                    <a href="#bts-section" class="hover:text-brand-gold transition-colors">كواليس الإنتاج</a>
-                    <a href="#media-roi-section" class="hover:text-brand-gold transition-colors">خطة الرعاية</a>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <a href="#asta-section" class="px-4 py-2 rounded-xl bg-brand-crema/20 border border-brand-crema/40 text-brand-crema text-xs font-bold hover:bg-brand-crema hover:text-dark-950 transition-all">
-                        ملف شركة أسطا
+                <div class="flex items-center gap-2 shrink-0">
+                    <a href="index.html" class="px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 rounded-lg border border-sand-300 text-charcoal-700 hover:text-charcoal-900 hover:border-charcoal-600 text-[11px] sm:text-xs font-bold transition-all">
+                        الموقع الرسمي
                     </a>
-                    <a href="index.html" class="px-4 py-2 rounded-xl bg-brand-gold/15 border border-brand-gold/30 text-brand-gold text-xs font-bold hover:bg-brand-gold hover:text-dark-950 transition-all">
-                        موقع البرنامج الرسمي
+                    <a href="#media-roi-section" class="px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 rounded-lg bg-charcoal-900 text-sand-50 hover:bg-brand-terracotta text-[11px] sm:text-xs font-bold transition-all shadow-sm">
+                        تواصل الرعاية
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- HERO / CONCEPT SECTION -->
-    <header id="concept-section" class="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden flex items-center justify-center min-h-[90vh]">
-        <div class="absolute inset-0 z-0">
-            <!-- Satellite/Earth subtle background overlay -->
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-dark-900/60 via-dark-950/95 to-dark-950"></div>
-            <div class="absolute inset-0 bg-[url('images/pitch/bigster_desert.jpg')] bg-cover bg-center opacity-15 filter blur-[2px]"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <!-- HERO / CONCEPT SECTION (Warm Ivory & Documentary Tone) -->
+    <header id="concept-section" class="relative pt-16 pb-20 md:pt-24 md:pb-24 bg-[#FAF8F5] border-b border-[#E8DFD5]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
-            <!-- Host & Creator Badge & Featured Adventure Shot -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 reveal active">
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border border-brand-gold/40">
-                    <img src="images/pitch/fayssal_profile.jpg" alt="Fayssal Vlog" class="w-8 h-8 rounded-full border border-brand-gold object-cover">
-                    <span class="text-xs sm:text-sm font-bold text-gray-200">
-                        تقديم وإعداد: <span class="text-brand-gold">Fayssal Vlog</span>
-                    </span>
-                    <span class="text-xs bg-brand-gold/20 text-brand-gold px-2.5 py-0.5 rounded-full font-mono">+400K Communauté</span>
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Editorial Pill Tag -->
+                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#F4EFEA] border border-[#E8DFD5] mb-8 text-xs font-bold text-[#524E46]">
+                    <img src="images/pitch/fayssal_profile.jpg" alt="Fayssal Vlog" class="w-6 h-6 rounded-full object-cover">
+                    <span>تقديم: <strong class="text-[#171614]">Fayssal Vlog</strong></span>
+                    <span class="text-[#BC5D3B] font-mono">• +400K Communauté</span>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                    <span class="hidden sm:inline text-[#757065]">سلسلة استكشاف وتوثيق التراث المغربي</span>
                 </div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-950/40 border border-brand-crema/30 text-xs text-brand-crema">
-                    <span class="w-2 h-2 rounded-full bg-brand-crema"></span>
-                    <span>مغامرة استكشافية وتوثيق تراثي 100% مغربي</span>
+
+                <!-- Editorial Headline -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-[#171614] mb-6 tracking-tight leading-[1.15]">
+                    «تحدي المليون»<br>
+                    <span class="font-latin text-3xl sm:text-5xl md:text-6xl text-[#BC5D3B] font-extrabold tracking-tight">Le Défi du Million</span>
+                </h1>
+
+                <p class="text-lg sm:text-xl text-[#524E46] font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+                    مغامرة وثائقية وتنافسية عبر ربوع المملكة لاكتشاف التراث الإنساني والمعالم الأصيلة:<br class="hidden sm:inline">
+                    <strong class="text-[#171614]">بدون GPS • بدون هواتف • وبدون طرق سريعة</strong> — بالاعتماد فقط على الخريطة الورقية ولقاءات السكان المحليين.
+                </p>
+
+                <!-- Clean Editorial Actions -->
+                <div class="flex flex-wrap gap-3.5 justify-center items-center mb-14">
+                    <a href="#map-section" class="px-6 py-3.5 rounded-xl bg-[#171614] hover:bg-[#BC5D3B] text-[#FAF8F5] font-bold text-sm transition-all shadow-sm flex items-center gap-2.5">
+                        <svg class="w-4 h-4 text-[#C7A75C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                        <span>خريطة المسارات والمحطات (35)</span>
+                    </a>
+                    <a href="#asta-section" class="px-6 py-3.5 rounded-xl bg-[#FFFFFF] border border-[#D8C9B9] hover:border-[#171614] text-[#171614] font-bold text-sm transition-all flex items-center gap-2.5">
+                        <svg class="w-4 h-4 text-[#BC5D3B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>ملف الشراكة: قهوة أسطا (Café Asta)</span>
+                    </a>
                 </div>
-            </div>
 
-            <!-- Main Titles -->
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black mb-6 tracking-tight leading-tight reveal active">
-                «تحدي المليون»<br>
-                <span class="text-gradient-gold font-latin tracking-wide">Le Défi du Million</span>
-            </h1>
-
-            <p class="text-lg sm:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed mb-10 reveal active">
-                أضخم مغامرة رقمية مغربية لاكتشاف عمق التراث والكنوز الحية:<br class="hidden sm:inline">
-                <span class="text-white font-bold">بدون GPS • بدون هواتف • بدون أوطوروت</span> — فقط الخريطة الورقية وكرم أولاد البلاد.
-            </p>
-
-            <!-- Quick Action Buttons -->
-            <div class="flex flex-wrap gap-4 justify-center items-center mb-16 reveal active">
-                <a href="#map-section" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-crema to-brand-gold text-dark-950 font-black text-base shadow-xl hover:shadow-brand-gold/30 hover:scale-105 transition-all flex items-center gap-3">
-                    <svg class="w-5 h-5 text-dark-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    <span>استكشف خريطة القمر الصناعي (35 محطة)</span>
-                </a>
-                <a href="#asta-section" class="px-8 py-4 rounded-xl glass border border-brand-crema/40 text-brand-crema hover:bg-brand-crema/10 font-bold text-base transition-all flex items-center gap-3">
-                    <svg class="w-5 h-5 text-brand-crema" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span>عرض الشراكة: قهوة أسطا (Café Asta)</span>
-                </a>
-            </div>
-
-            <!-- Official Partners Ribbon -->
-            <div class="border-t border-white/10 pt-10 flex flex-wrap justify-center items-center gap-8 sm:gap-14 text-gray-400 text-xs sm:text-sm font-semibold reveal active">
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-brand-crema animate-ping"></span>
-                    <span>الشريك الرسمي للمشروبات والطاقة:</span>
-                    <span class="text-white font-black text-base px-2.5 py-1 rounded bg-amber-950/40 border border-brand-crema/40 text-brand-crema">CAFÉ ASTA (قهوة أسطا)</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                    <span>السيارة الرسمية للمغامرة:</span>
-                    <span class="font-bold text-white px-2 py-1 rounded border border-white/20">DACIA BIGSTER HYBRID</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                    <span>معرض الانطلاقة واللوجستيك:</span>
-                    <span class="font-bold text-gray-200">RENAULT TOP AUTO MOHAMMEDIA</span>
+                <!-- Structured Sponsor Attribution Bar -->
+                <div class="pt-8 border-t border-[#E8DFD5] flex flex-wrap justify-center items-center gap-6 sm:gap-10 text-xs text-[#757065]">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#BC5D3B]"></span>
+                        <span>شريك القهوة والطاقة:</span>
+                        <strong class="text-[#171614] font-bold">Café Asta (قهوة أسطا)</strong>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#A68238]"></span>
+                        <span>سيارة المغامرة:</span>
+                        <strong class="text-[#171614] font-bold">Dacia Bigster Hybrid</strong>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#524E46]"></span>
+                        <span>معرض الانطلاقة:</span>
+                        <strong class="text-[#171614] font-bold">Renault Top Auto Mohammedia</strong>
+                    </div>
                 </div>
             </div>
 
         </div>
     </header>
 
-    <!-- SECTION: GOOGLE EARTH SATELLITE MAP WITH HIGHLIGHTED TRAILS & 3D LANDMARKS -->
-    <section class="py-24 relative bg-dark-950 border-t border-white/10 overflow-hidden" id="map-section">
+    <!-- SECTION: MAP & EXPEDITION TRAILS (Editorial Dark Accent Moment) -->
+    <section class="py-24 relative bg-[#171614] text-[#FAF8F5] border-t border-[#34312B] overflow-hidden" id="map-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Section Title & Legend -->
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>خريطة تفاعلية • مسارات مهايلايتية ملونة • مجسمات 3D طراز Google Earth</span>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#23211D] border border-[#34312B] text-[#C7A75C] text-xs font-bold mb-3">
+                        <span class="w-2 h-2 rounded-full bg-[#BC5D3B]"></span>
+                        <span>خريطة تفاعلية • 6 مسارات وثائقية • مجسمات ثلاثية الأبعاد 3D</span>
                     </div>
-                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">
-                        خريطة التراجي الفضائية: <span class="text-gradient-gold">المغرب بدون أوطوروت</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#FAF8F5] leading-tight">
+                        خريطة المسارات البرية: <span class="text-[#C7A75C]">المغرب الأصيل بدون طرق سريعة</span>
                     </h2>
-                    <p class="text-gray-300 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
-                        كل طراجي مهايلايتي بلون مخصص، ونقط التوقف معلمين فوق الخريطة. <strong class="text-brand-gold">زومي على أي مدينة أو كليكي عليها</strong> باش يطلع ليك المجسم ثلاثي الأبعاد 3D بحال Google Earth والصورة الحقيقية للمكان!
+                    <p class="text-[#D8C9B9] text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+                        مسارات وطنية وجهوية تمتد عبر ربوع المملكة. انقر على أي محطة أو قم بتكبير الخريطة لمعاينة التحديات الحرفية والتاريخية والمجسمات التراثية 3D.
                     </p>
                 </div>
 
@@ -324,17 +319,17 @@
 
             <!-- Trajet Filter Tabs -->
             <div class="flex flex-wrap gap-2 mb-6">
-                <button type="button" id="map-btn-ep-1" onclick="window.selectEpisode(1)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-gold text-dark-950 transition-all">الحلقة 1: الشمال (5)</button>
-                <button type="button" id="map-btn-ep-2" onclick="window.selectEpisode(2)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 2: الشرق (6)</button>
-                <button type="button" id="map-btn-ep-3" onclick="window.selectEpisode(3)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 3: الأطلس والواحات (6)</button>
-                <button type="button" id="map-btn-ep-4" onclick="window.selectEpisode(4)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 4: الساحل (6)</button>
-                <button type="button" id="map-btn-ep-5" onclick="window.selectEpisode(5)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 5: سوس (6)</button>
-                <button type="button" id="map-btn-ep-6" onclick="window.selectEpisode(6)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 6: الصحراء (6)</button>
-                <button type="button" id="map-btn-ep-all" onclick="window.selectEpisode('all')" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold glass text-gray-300 hover:text-white transition-all">الكل (35 محطة)</button>
+                <button type="button" id="map-btn-ep-1" onclick="window.selectEpisode(1)" class="map-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#171614] text-[#FAF8F5] transition-all">الحلقة 1: الشمال (5)</button>
+                <button type="button" id="map-btn-ep-2" onclick="window.selectEpisode(2)" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الحلقة 2: الشرق (6)</button>
+                <button type="button" id="map-btn-ep-3" onclick="window.selectEpisode(3)" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الحلقة 3: الأطلس والواحات (6)</button>
+                <button type="button" id="map-btn-ep-4" onclick="window.selectEpisode(4)" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الحلقة 4: الساحل (6)</button>
+                <button type="button" id="map-btn-ep-5" onclick="window.selectEpisode(5)" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الحلقة 5: سوس (6)</button>
+                <button type="button" id="map-btn-ep-6" onclick="window.selectEpisode(6)" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الحلقة 6: الصحراء (6)</button>
+                <button type="button" id="map-btn-ep-all" onclick="window.selectEpisode('all')" class="map-filter-btn px-4 py-2 rounded-lg text-xs font-bold bg-[#23211D] border border-[#34312B] text-[#D8C9B9] hover:text-white hover:border-[#BC5D3B] transition-all">الكل (35 محطة)</button>
             </div>
 
             <!-- Map Control & Layer Switcher -->
-            <div class="glass p-4 rounded-2xl mb-4 border border-brand-gold/30 flex flex-wrap justify-between items-center gap-4">
+            <div class="editorial-card p-4 rounded-2xl mb-4 border border-[#34312B] flex flex-wrap justify-between items-center gap-4">
                 <div class="flex items-center gap-3">
                     <span class="text-xs text-brand-gold font-bold">إرشاد للملاحة:</span>
                     <span class="text-xs text-gray-300">انقر على أي نقطة أو زومي عليها لمشاهدة المجسم ثلاثي الأبعاد 3D للموقع!</span>
@@ -342,9 +337,9 @@
 
                 <div class="flex items-center gap-2 text-xs">
                     <span class="text-gray-400">الخريطة:</span>
-                    <button type="button" onclick="window.selectLayer('satellite')" id="layer-btn-sat" class="px-3 py-1.5 rounded-xl bg-brand-gold text-dark-950 font-bold border border-brand-gold">قمر صناعي (Satellite)</button>
-                    <button type="button" onclick="window.selectLayer('streets')" id="layer-btn-str" class="px-3 py-1.5 rounded-xl glass text-gray-300 font-bold hover:text-white">خريطة طرقية (Roads)</button>
-                    <button type="button" onclick="window.resetMapZoom()" class="px-3 py-1.5 rounded-xl glass text-gray-300 hover:text-white border border-white/20">إعادة الزوم</button>
+                    <button type="button" onclick="window.selectLayer('satellite')" id="layer-btn-sat" class="px-3 py-1.5 rounded-xl bg-[#171614] text-[#FAF8F5] font-bold border border-brand-gold">قمر صناعي (Satellite)</button>
+                    <button type="button" onclick="window.selectLayer('streets')" id="layer-btn-str" class="px-3 py-1.5 rounded-xl bg-[#FFFFFF] border border-[#E8DFD5] text-gray-300 font-bold hover:text-white">خريطة طرقية (Roads)</button>
+                    <button type="button" onclick="window.resetMapZoom()" class="px-3 py-1.5 rounded-xl bg-[#FFFFFF] border border-[#E8DFD5] text-gray-300 hover:text-white border border-white/20">إعادة الزوم</button>
                 </div>
             </div>
 
@@ -361,12 +356,12 @@
             </div>
 
             <!-- THE SATELLITE MAP CONTAINER & FLOATING 3D GOOGLE EARTH BOX -->
-            <div class="relative rounded-3xl overflow-hidden border border-brand-gold/30 shadow-2xl">
+            <div class="relative rounded-3xl overflow-hidden border border-[#34312B] shadow-2xl">
                 <!-- Leaflet Map Container -->
                 <div id="morocco-satellite-map" style="height: 580px; width: 100%;"></div>
 
                 <!-- FLOATING 3D GOOGLE EARTH BOX (Appears on Zoom or Stop Click) -->
-                <div id="google-earth-3d-box" class="hidden absolute top-4 right-4 bottom-4 z-30 max-w-sm w-full glass-card p-5 rounded-2xl border border-brand-gold/50 shadow-2xl backdrop-blur-xl flex flex-col justify-between overflow-y-auto">
+                <div id="google-earth-3d-box" class="hidden absolute top-4 right-4 bottom-4 z-30 max-w-sm w-full editorial-card p-5 rounded-2xl border border-[#A68238]/60 shadow-2xl backdrop-blur-xl flex flex-col justify-between overflow-y-auto">
                     <div>
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
                             <div>
@@ -377,8 +372,8 @@
                         </div>
 
                         <!-- 3D WebGL Canvas Box -->
-                        <div class="relative rounded-xl overflow-hidden border border-brand-gold/40 bg-dark-950 mb-3">
-                            <span class="absolute top-2 right-2 z-10 bg-dark-950/80 px-2 py-0.5 rounded text-[9px] font-bold text-brand-gold border border-brand-gold/30">
+                        <div class="relative rounded-xl overflow-hidden border border-[#34312B] bg-[#171614] mb-3">
+                            <span class="absolute top-2 right-2 z-10 bg-[#171614]/80 px-2 py-0.5 rounded text-[9px] font-bold text-brand-gold border border-[#34312B]">
                                 مجسم تفاعلي 3D (تدوير 360°)
                             </span>
                             <div id="ge3d-canvas-container" style="height: 180px; width: 100%;"></div>
@@ -387,14 +382,14 @@
                         <!-- Real Photo of the Stop -->
                         <div class="relative rounded-xl overflow-hidden h-28 border border-white/10 mb-3">
                             <img id="ge3d-stop-img" src="" alt="" class="w-full h-full object-cover">
-                            <span class="absolute bottom-1 right-2 text-[10px] font-bold text-white bg-dark-950/80 px-2 py-0.5 rounded border border-white/20">
+                            <span class="absolute bottom-1 right-2 text-[10px] font-bold text-white bg-[#171614]/80 px-2 py-0.5 rounded border border-white/20">
                                 المعاينة الميدانية للموقع
                             </span>
                         </div>
 
                         <!-- Challenges Summary -->
                         <div class="space-y-2 text-xs">
-                            <div class="bg-amber-950/40 p-2.5 rounded-xl border border-brand-gold/30">
+                            <div class="bg-amber-950/40 p-2.5 rounded-xl border border-[#34312B]">
                                 <span class="text-[11px] font-bold text-brand-gold block">تحدي الحرفة اليدوية:</span>
                                 <span id="ge3d-craft-name" class="text-white font-bold leading-tight block"></span>
                             </div>
@@ -407,7 +402,7 @@
                     </div>
 
                     <div class="mt-4 pt-3 border-t border-white/10 flex gap-2">
-                        <button type="button" onclick="close3DLandmarkBox(); window.resetMapZoom();" class="w-full py-2 rounded-xl bg-brand-gold text-dark-950 font-black text-xs hover:scale-105 transition-all text-center">
+                        <button type="button" onclick="close3DLandmarkBox(); window.resetMapZoom();" class="w-full py-2 rounded-xl bg-[#171614] text-[#FAF8F5] font-black text-xs hover:scale-105 transition-all text-center">
                             العودة للمسار العام
                         </button>
                     </div>
@@ -424,7 +419,7 @@
     </section>
 
     <!-- INNOVATION 3D HERITAGE INSPECTOR DRAWER -->
-    <div id="innovation-3d-drawer" class="fixed inset-y-0 left-0 max-w-xl w-full glass-card border-r border-brand-gold/40 z-[999] shadow-2xl transform -translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto">
+    <div id="innovation-3d-drawer" class="fixed inset-y-0 left-0 max-w-xl w-full editorial-card border-r border-[#34312B] z-[999] shadow-2xl transform -translate-x-full transition-transform duration-500 ease-in-out overflow-y-auto">
         <div class="p-6 sm:p-8">
             <div class="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
                 <div>
@@ -437,8 +432,8 @@
             <!-- Two Visuals: 3D Canvas + Real Photo -->
             <div class="space-y-4 mb-6">
                 <!-- 3D Canvas Box -->
-                <div class="relative rounded-2xl overflow-hidden border border-brand-gold/40 bg-dark-950">
-                    <div class="absolute top-3 right-3 z-10 bg-dark-950/80 px-2.5 py-1 rounded-md text-[10px] font-bold text-brand-gold border border-brand-gold/30">
+                <div class="relative rounded-2xl overflow-hidden border border-[#34312B] bg-[#171614]">
+                    <div class="absolute top-3 right-3 z-10 bg-[#171614]/80 px-2.5 py-1 rounded-md text-[10px] font-bold text-brand-gold border border-[#34312B]">
                         مجسم تفاعلي 3D (تدوير 360°)
                     </div>
                     <div id="drawer-3d-canvas-container" style="height: 260px; width: 100%;"></div>
@@ -448,7 +443,7 @@
                 <div class="relative rounded-2xl overflow-hidden h-44 border border-white/10">
                     <img id="drawer-real-img" src="" alt="" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent"></div>
-                    <span class="absolute bottom-3 right-3 text-xs font-bold text-white bg-dark-950/80 px-2.5 py-1 rounded border border-white/20">
+                    <span class="absolute bottom-3 right-3 text-xs font-bold text-white bg-[#171614]/80 px-2.5 py-1 rounded border border-white/20">
                         المعاينة الميدانية للموقع
                     </span>
                 </div>
@@ -456,11 +451,11 @@
 
             <!-- Challenges Details -->
             <div class="space-y-4">
-                <div class="bg-amber-950/30 p-4 rounded-xl border border-brand-gold/30">
+                <div class="bg-amber-950/30 p-4 rounded-xl border border-[#34312B]">
                     <span class="text-xs font-extrabold uppercase text-brand-gold block mb-1">تحدي الحرفة التقليدية:</span>
                     <h4 id="drawer-craft-title" class="text-base font-black text-white mb-2"></h4>
                     <p id="drawer-craft-desc" class="text-xs text-gray-300 leading-relaxed mb-2"></p>
-                    <div class="p-2.5 rounded-lg bg-dark-950/80 text-[11px] text-brand-crema border border-brand-gold/20">
+                    <div class="p-2.5 rounded-lg bg-[#171614]/80 text-[11px] text-brand-crema border border-brand-gold/20">
                         <strong>شرط المعلم:</strong> <span id="drawer-craft-rule"></span>
                     </div>
                 </div>
@@ -473,7 +468,7 @@
                 </div>
 
                 <div class="bg-amber-900/20 p-4 rounded-xl border border-brand-crema/30 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-brand-crema/20 flex items-center justify-center text-brand-crema"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"/></svg></div>
+                    <div class="w-10 h-10 rounded-xl bg-[#BC5D3B]/20 flex items-center justify-center text-brand-crema"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"/></svg></div>
                     <div>
                         <span class="text-xs font-bold text-brand-crema block">استراحة قهوة أسطا (Pause Asta):</span>
                         <p class="text-[11px] text-gray-300 leading-tight">جلسة شرب قهوة أسطا مع الصانع التقليدي لمناقشة أسرار الحرفة وتكريم التراث المغربي.</p>
@@ -483,39 +478,39 @@
         </div>
     </div>
 
-    <!-- SECTION: SIMPLIFIED EPISODES & 35 STOPS (تفاصيل المحطات والتحديات المبسطة) -->
-    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="episodes-section">
+    <!-- SECTION: THE 35 STOPS (Warm Sand Background) -->
+    <section class="py-24 relative bg-[#FAF8F5] border-t border-[#E8DFD5]" id="episodes-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">35 STOPS & SIMPLIFIED CHALLENGES</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                    تفاصيل الحلقات الـ 6 <span class="text-gradient-gold">والمحطات الـ 35</span>
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#BC5D3B] block mb-2 font-latin">35 ÉTAPES DU PATRIMOINE MAROCAIN</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#171614] mb-4">
+                    محطات السلسلة <span class="text-[#BC5D3B]">والتحديات الميدانية الـ 35</span>
                 </h2>
-                <p class="text-gray-300 text-base leading-relaxed">
-                    كل محطة تم تبسيطها وفق طلبكم: <strong class="text-white">الصورة الحقيقية للمكان</strong> + <strong class="text-brand-gold">تحدي الحرفة اليدوية</strong> + <strong class="text-emerald-400">تحدي المعلم التاريخي</strong> فقط، بدون نصوص مطولة.
+                <p class="text-[#524E46] text-base leading-relaxed">
+                    كل مرحلة تجمع بين توثيق المكان، تحدي الصنعة التقليدية تحت إشراف معلم حرفي، واستكشاف المعلم التاريخي عبر زوايا سينمائية.
                 </p>
             </div>
 
             <!-- Episode Selector Tabs -->
-            <div class="flex flex-wrap gap-3 justify-center mb-12">
-                <button id="ep-tab-1" onclick="showEpisodeCards(1)" class="ep-tab-btn active px-6 py-3 rounded-xl text-sm font-bold bg-brand-gold text-dark-950 transition-all">الحلقة 1: الشمال (5 محطات)</button>
-                <button id="ep-tab-2" onclick="showEpisodeCards(2)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 2: الشرق (6 محطات)</button>
-                <button id="ep-tab-3" onclick="showEpisodeCards(3)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 3: الأطلس (6 محطات)</button>
-                <button id="ep-tab-4" onclick="showEpisodeCards(4)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 4: الساحل (6 محطات)</button>
-                <button id="ep-tab-5" onclick="showEpisodeCards(5)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 5: سوس (6 محطات)</button>
-                <button id="ep-tab-6" onclick="showEpisodeCards(6)" class="ep-tab-btn px-6 py-3 rounded-xl text-sm font-bold glass text-gray-300 hover:text-white transition-all">الحلقة 6: الصحراء (6 محطات)</button>
+            <div class="flex flex-wrap gap-2.5 justify-center mb-10">
+                <button id="ep-tab-1" onclick="showEpisodeCards(1)" class="ep-tab-btn active px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#171614] text-[#FAF8F5] transition-all shadow-sm">الحلقة 1: الشمال (5 محطات)</button>
+                <button id="ep-tab-2" onclick="showEpisodeCards(2)" class="ep-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white border border-[#E8DFD5] text-[#524E46] hover:text-[#171614] hover:border-[#171614] transition-all">الحلقة 2: الشرق (6 محطات)</button>
+                <button id="ep-tab-3" onclick="showEpisodeCards(3)" class="ep-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white border border-[#E8DFD5] text-[#524E46] hover:text-[#171614] hover:border-[#171614] transition-all">الحلقة 3: الأطلس (6 محطات)</button>
+                <button id="ep-tab-4" onclick="showEpisodeCards(4)" class="ep-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white border border-[#E8DFD5] text-[#524E46] hover:text-[#171614] hover:border-[#171614] transition-all">الحلقة 4: الساحل (6 محطات)</button>
+                <button id="ep-tab-5" onclick="showEpisodeCards(5)" class="ep-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white border border-[#E8DFD5] text-[#524E46] hover:text-[#171614] hover:border-[#171614] transition-all">الحلقة 5: سوس (6 محطات)</button>
+                <button id="ep-tab-6" onclick="showEpisodeCards(6)" class="ep-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white border border-[#E8DFD5] text-[#524E46] hover:text-[#171614] hover:border-[#171614] transition-all">الحلقة 6: الصحراء (6 محطات)</button>
             </div>
 
             <!-- Episode Summary Header -->
-            <div class="glass p-6 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-brand-gold/30">
+            <div class="editorial-card p-6 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-[#34312B]">
                 <div>
-                    <h3 id="ep-meta-title" class="text-2xl font-black text-white">الحلقة 1 : مسار الشمال والريف العتيق</h3>
-                    <p id="ep-meta-subtitle" class="text-sm text-brand-crema mt-1">أصيلة ➔ تطوان ➔ شفشاون ➔ وزان ➔ مولاي إدريس زرهون</p>
+                    <h3 id="ep-meta-title" class="text-2xl font-black text-[#171614]">الحلقة 1 : مسار الشمال والريف العتيق</h3>
+                    <p id="ep-meta-subtitle" class="text-sm text-[#BC5D3B] mt-1">أصيلة ➔ تطوان ➔ شفشاون ➔ وزان ➔ مولاي إدريس زرهون</p>
                 </div>
                 <div class="text-left md:text-right">
-                    <span class="text-xs uppercase tracking-wider text-gray-400 block font-latin">مسارات التراجي البرية:</span>
-                    <span id="ep-meta-roads" class="text-sm font-bold text-white">الطريق الوطنية N13 + N2 + الجهوية R410</span>
+                    <span class="text-xs uppercase tracking-wider text-[#757065] block font-latin">مسارات التراجي البرية:</span>
+                    <span id="ep-meta-roads" class="text-sm font-bold text-[#171614]">الطريق الوطنية N13 + N2 + الجهوية R410</span>
                 </div>
             </div>
 
@@ -527,20 +522,20 @@
         </div>
     </section>
 
-    <!-- SECTION: CAFÉ ASTA PARTNERSHIP & PRODUCT PLACEMENT (شراكة قهوة أسطا) -->
-    <section class="py-24 relative bg-dark-950 border-t border-brand-crema/20" id="asta-section">
+    <!-- SECTION: CAFÉ ASTA PARTNERSHIP (Warm Sand & Terracotta Identity) -->
+    <section class="py-24 relative bg-[#F4EFEA] border-t border-[#E8DFD5]" id="asta-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-crema/15 border border-brand-crema/40 text-brand-crema text-xs font-bold mb-4">
-                    <svg class="w-4 h-4 text-brand-crema" fill="currentColor" viewBox="0 0 20 20"><path d="M4 2a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H4zm2 4h8a1 1 0 110 2H6a1 1 0 110-2zm0 4h5a1 1 0 110 2H6a1 1 0 110-2z"/></svg>
-                    <span>الشريك الرسمي للمشروبات والطاقة الأصيلة</span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E8DFD5] text-[#BC5D3B] text-xs font-bold mb-4 shadow-sm">
+                    <svg class="w-4 h-4 text-[#BC5D3B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"/></svg>
+                    <span>الشريك الرسمي للمشروبات والطاقة: Café Asta</span>
                 </div>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                    شراكة قهوة أسطا <span class="text-gradient-coffee">(Café Asta)</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#171614] mb-5">
+                    دمج علامة قهوة أسطا <span class="text-[#BC5D3B]">في صميم التجربة الميدانية</span>
                 </h2>
-                <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
-                    كيفاش غادي تكون قهوة أسطا حاضرة فقلب البرنامج؟ ماشي كإشهار تقليدي، ولكن كعنصر طبيعي وأصيل فكل نهار، فكل مسار، ومع كل معلم وسكان القرى.
+                <p class="text-[#524E46] text-base sm:text-lg leading-relaxed">
+                    حضور طبيعي وأصيل يجسد كرم الضيافة المغربية: طقس الصباح عند شروق الشمس، رفيق الطريق داخل مقصورة Bigster، وجلسات الحوار مع الحرفيين وأولاد البلاد.
                 </p>
             </div>
 
@@ -548,19 +543,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 
                 <!-- Pillar 1: Morning Pour -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/asta_morning_pour.jpg" alt="طقس الصباح مع قهوة أسطا">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-crema text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#BC5D3B] text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
                             طقس الصباح
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">الافتتاح مع قهوة الصباح (Le Réveil)</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-xl font-bold text-[#171614] mb-2">الافتتاح مع قهوة الصباح (Le Réveil)</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             فيصل كيبدا الفلوغ ديالو فكل حلقة قبل شروق الشمس مع فنجان قهوة أسطا سخونة فالهواء الطلق. لقطة دافئة سينمائية كتربط المشاهد بالهدوء ونكهة القهوة المغربية الأصيلة.
                         </p>
-                        <div class="text-xs text-brand-gold font-semibold flex items-center gap-1.5">
+                        <div class="text-xs text-[#A68238] font-semibold flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
                             <span>ظهور رئيسي فـ Intro كل حلقة على يوتيوب</span>
                         </div>
@@ -568,19 +563,19 @@
                 </div>
 
                 <!-- Pillar 2: Thermos on Road -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/asta_thermos_road.jpg" alt="تيرموس قهوة أسطا فسيارة بيغستر">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-crema text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#BC5D3B] text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
                             رفيق الطريق
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">التيرموس فـ Dacia Bigster (En Route)</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-xl font-bold text-[#171614] mb-2">التيرموس فـ Dacia Bigster (En Route)</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             طول التراجي فالطرق الوطنية والمنعرجات الجبلية، تيرموس قهوة أسطا محطوط فمقصورة Dacia Bigster عبر حاملات YouClip. فيصل كيرتشف القهوة وهو كيوصف جمال الطبيعة.
                         </p>
-                        <div class="text-xs text-brand-gold font-semibold flex items-center gap-1.5">
+                        <div class="text-xs text-[#A68238] font-semibold flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
                             <span>دمج عضوي فلقطات القيادة والسفر</span>
                         </div>
@@ -588,19 +583,19 @@
                 </div>
 
                 <!-- Pillar 3: Souk Break -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/asta_souk_break.jpg" alt="قهوة أسطا مع المعلم والساكنة">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-crema text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#BC5D3B] text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
                             كرم الضيافة
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">جلسة قهوة مع المعلم فالسوق (Le Partage)</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-xl font-bold text-[#171614] mb-2">جلسة قهوة مع المعلم فالسوق (Le Partage)</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             فكل محطة وورشة تقليدية، فيصل كيجلس يشارك كاس قهوة أسطا مع الصانع التقليدي وشيوخ الدواوير. القهوة كتكون مفتاح الحوار والحديث العفوي عن أسرار الصنعة.
                         </p>
-                        <div class="text-xs text-brand-gold font-semibold flex items-center gap-1.5">
+                        <div class="text-xs text-[#A68238] font-semibold flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
                             <span>ربط علامة أسطا بالكرم والأصالة المغربية</span>
                         </div>
@@ -608,19 +603,19 @@
                 </div>
 
                 <!-- Pillar 4: Coffee Roast & Spices -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/asta_coffee_roast.jpg" alt="تحميص بلدي وتوابل مغربية لقهوة أسطا">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-crema text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#BC5D3B] text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
                             تحدي التوابل
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">قهوة معطرة بتوابل كل جهة (Café Beldi)</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-xl font-bold text-[#171614] mb-2">قهوة معطرة بتوابل كل جهة (Café Beldi)</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             إعداد وصفات قهوة مغربية محلية بالتعاون مع أسطا: قهوة بالزعفران فتاليوين، قهوة بالقرفة وحبة حلاوة بفاس، وقهوة الصحراء بالتوابل العطرية الأصيلة.
                         </p>
-                        <div class="text-xs text-brand-gold font-semibold flex items-center gap-1.5">
+                        <div class="text-xs text-[#A68238] font-semibold flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
                             <span>محتوى Reel وتيك توك خاص بكل وصفة</span>
                         </div>
@@ -628,19 +623,19 @@
                 </div>
 
                 <!-- Pillar 5: Candidate Boost Pack -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/asta_pack.jpg" alt="باك قهوة أسطا للمتسابقين">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-crema text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#BC5D3B] text-xs px-2.5 py-1 rounded-md font-bold border border-brand-crema/30">
                             باك الطاقة
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">باك أسطا للمتسابقين (Coup de Boost)</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-xl font-bold text-[#171614] mb-2">باك أسطا للمتسابقين (Coup de Boost)</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             عند خط البداية، كيتسلم كل متسابق حقيبة التحدي وفيها علبة قهوة أسطا وتيرموس خاص، كطاقة أساسية لمساعدتهم على التركيز ومقاومة تعب الطريق والتنقل الشعبي.
                         </p>
-                        <div class="text-xs text-brand-gold font-semibold flex items-center gap-1.5">
+                        <div class="text-xs text-[#A68238] font-semibold flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
                             <span>حضور دائم فحقيبة كل متسابق طوال الحلقة</span>
                         </div>
@@ -648,29 +643,29 @@
                 </div>
 
                 <!-- Sponsor Highlights Box -->
-                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border-2 border-brand-crema/40 bg-gradient-to-br from-amber-950/30 via-dark-900 to-dark-950 reveal">
+                <div class="editorial-card rounded-2xl p-6 flex flex-col justify-between border-2 border-brand-crema/40 bg-[#FAF8F5] border border-[#BC5D3B]/40 reveal">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-brand-crema/20 text-brand-crema flex items-center justify-center mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-[#BC5D3B]/20 text-[#BC5D3B] flex items-center justify-center mb-4">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 1v3M10 1v3M14 1v3"/></svg>
                         </div>
-                        <h3 class="text-2xl font-black text-white mb-3">حصرية فئة القهوة للعلامة</h3>
-                        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+                        <h3 class="text-2xl font-black text-[#171614] mb-3">حصرية فئة القهوة للعلامة</h3>
+                        <p class="text-sm text-[#524E46] leading-relaxed mb-4">
                             شركة أسطا غادي تكون الراعي الحصري الوحيد لفئة القهوة والمشروبات الساخنة طيلة الموسم الأول:
                         </p>
-                        <ul class="text-xs text-gray-300 space-y-2.5">
+                        <ul class="text-xs text-[#524E46] space-y-2.5">
                             <li class="flex items-center gap-2">
-                                <span class="text-brand-crema font-bold">✔</span> لوغو أسطا فجميع البوسترات ومقدمة الحلقات
+                                <span class="text-[#BC5D3B] font-bold">✔</span> لوغو أسطا فجميع البوسترات ومقدمة الحلقات
                             </li>
                             <li class="flex items-center gap-2">
-                                <span class="text-brand-crema font-bold">✔</span> طاغ رسمي في 60+ سطوري إنستغرام عبر Collab
+                                <span class="text-[#BC5D3B] font-bold">✔</span> طاغ رسمي في 60+ سطوري إنستغرام عبر Collab
                             </li>
                             <li class="flex items-center gap-2">
-                                <span class="text-brand-crema font-bold">✔</span> حقوق استخدام كامل اللقطات لحملات أسطا الإشهارية
+                                <span class="text-[#BC5D3B] font-bold">✔</span> حقوق استخدام كامل اللقطات لحملات أسطا الإشهارية
                             </li>
                         </ul>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-white/10 text-center">
-                        <span class="text-brand-gold text-xs font-bold font-mono">100% MARQUE MAROCAINE FIÈRE</span>
+                    <div class="mt-6 pt-4 border-t border-[#E8DFD5] text-center">
+                        <span class="text-[#A68238] text-xs font-bold font-mono">100% MARQUE MAROCAINE FIÈRE</span>
                     </div>
                 </div>
 
@@ -679,17 +674,17 @@
         </div>
     </section>
 
-    <!-- SECTION: FLEET & EXPEDITION VEHICLES (أسطول بيغستر ورونو) -->
-    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="bigster-section">
+    <!-- SECTION: EXPEDITION FLEET (Editorial Clean Design) -->
+    <section class="py-24 relative bg-[#FAF8F5] border-t border-[#E8DFD5]" id="bigster-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-extrabold uppercase tracking-widest text-blue-400 block mb-3 font-latin">OFFICIAL EXPEDITION FLEET</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                    أسطول المغامرة: <span class="text-gradient-gold">Dacia Bigster Hybrid</span>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#757065] block mb-2 font-latin">VÉHICULE OFFICIEL & EXPÉDITION</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#171614] mb-4">
+                    أسطول المغامرة: <span class="text-[#A68238]">Dacia Bigster Hybrid</span>
                 </h2>
-                <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
-                    بالتعاون مع <strong class="text-white">Renault Top Auto المحمدية</strong>، سيارة داسيا بيغستر هايبريد الجديدة هي الرفيقة الميكانيكية لفيصل وفريق الإنتاج عبر كل التضاريس المغربية.
+                <p class="text-[#524E46] text-base sm:text-lg leading-relaxed">
+                    بشراكة مع <strong class="text-[#171614]">Renault Top Auto Mohammedia</strong>، تواكب سيارة Dacia Bigster فريق الإنتاج كمحطة لوجستية متنقلة ومثال للكفاءة الميكانيكية على المسارات الوعرة.
                 </p>
             </div>
 
@@ -697,64 +692,64 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- Card 1: Showroom -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/renault_showroom.jpg" alt="معرض رونو توب أوطو المحمدية">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-white text-xs px-2.5 py-1 rounded-md font-bold border border-white/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold border border-[#D8C9B9]">
                             نقطة الانطلاقة
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">معرض Renault Top Auto المحمدية</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">معرض Renault Top Auto المحمدية</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             المقر الرسمي لتسليم السيارات وانطلاق كل حلقة مع تغطية تصويرية في قاعة العرض الحديثة.
                         </p>
                     </div>
                 </div>
 
                 <!-- Card 2: Trail Adventure -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/bigster_adventure.jpg" alt="داسيا بيغستر فالبيست والجبال">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-blue-400 text-xs px-2.5 py-1 rounded-md font-bold border border-blue-400/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold bg-white/95 border border-[#E8DFD5]">
                             جاهزة للمسارات الوعرة
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">اختبار حقيقي فالطبيعة</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">اختبار حقيقي فالطبيعة</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             اجتياز المنعرجات الجبلية العالية بالأطلس، وممرات الصخور في سوس بدون خوف من الأعطال.
                         </p>
                     </div>
                 </div>
 
                 <!-- Card 3: Desert Dunes -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/bigster_desert.jpg" alt="داسيا بيغستر فرمال الصحراء">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-amber-400 text-xs px-2.5 py-1 rounded-md font-bold border border-amber-400/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold bg-white/95 border border-[#E8DFD5]">
                             اقتصاد وقوة هجينة
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">كفاءة محرك الهايبريد</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">كفاءة محرك الهايبريد</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             استهلاك وقود استثنائي ومدى سير طويل يغطي مئات الكيلومترات في قلب الصحراء بدون محطات وقود متقاربة.
                         </p>
                     </div>
                 </div>
 
                 <!-- Card 4: Interior Tech -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/bigster_interior.jpg" alt="مقصورة داسيا بيغستر الذكية">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-emerald-400 text-xs px-2.5 py-1 rounded-md font-bold border border-emerald-400/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold bg-white/95 border border-[#E8DFD5]">
                             استوديو شحن متنقل
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">مقصورة ذكية لمعدات التصوير</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">مقصورة ذكية لمعدات التصوير</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             نظام YouClip لشحن بطاريات الكاميرات والدرون ومراجعة لقطات التصوير داخل السيارة مباشرة في الميدان.
                         </p>
                     </div>
@@ -765,17 +760,17 @@
         </div>
     </section>
 
-    <!-- SECTION: BEHIND THE SCENES & PRODUCTION QUALITY (كواليس التصوير وجودة الإنتاج) -->
-    <section class="py-24 relative bg-dark-950 border-t border-white/10" id="bts-section">
+    <!-- SECTION: BTS & PRODUCTION (Editorial Warm Ivory Tone) -->
+    <section class="py-24 relative bg-[#F4EFEA] border-t border-[#E8DFD5]" id="bts-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">BEHIND THE SCENES & QUALITY ASSURANCE</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                    كواليس الإنتاج <span class="text-gradient-gold">وجودة التصوير 4K</span>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#757065] block mb-2 font-latin">PRODUCTION & QUALITÉ CINÉMATIQUE 4K</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#171614] mb-4">
+                    كواليس الإنتاج <span class="text-[#BC5D3B]">والمعايير السينمائية 4K</span>
                 </h2>
-                <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
-                    فريق تصوير محترف وتقنيات سينمائية تضمن خروج البرنامج بأعلى المعايير العالمية التي تليق بصورة الرعاة الكبار.
+                <p class="text-[#524E46] text-base sm:text-lg leading-relaxed">
+                    طاقم تصوير تقني رشيق يجمع بين الكاميرات السينمائية والدرون 4K والتوثيق الميداني العفوي، لتقديم محتوى عالي الجودة للجمهور والشركاء.
                 </p>
             </div>
 
@@ -783,64 +778,64 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- BTS 1: Drone -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/prod_drone_cam.jpg" alt="تصوير سينمائي بالدرون">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-brand-gold text-xs px-2.5 py-1 rounded-md font-bold border border-brand-gold/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#A68238] text-xs px-2.5 py-1 rounded-md font-bold border border-[#34312B]">
                             درون سينمائي 4K
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">مشاهد جوية بانورامية</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">مشاهد جوية بانورامية</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             لقطات درون تحبس الأنفاس توثق جمال القصبات الطينية، قمم الأطلس الشاهقة، والشواطئ الأطلسية الساحرة.
                         </p>
                     </div>
                 </div>
 
                 <!-- BTS 2: Camera Crew -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/prod_camera_crew.jpg" alt="طاقم التصوير الميداني">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-white text-xs px-2.5 py-1 rounded-md font-bold border border-white/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold border border-[#D8C9B9]">
                             طاقم خفيف ورشيق
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">فريق كاميرا محترف</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">فريق كاميرا محترف</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             كاميرات سينمائية خفيفة تلاحق المتسابقين في الأسواق ووسائل النقل دون تعطيل العفوية وردود الفعل الحقيقية.
                         </p>
                     </div>
                 </div>
 
                 <!-- BTS 3: Desert Camp -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/prod_desert_camp.jpg" alt="مخيم الإنتاج واللوجستيك في الصحراء">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-amber-400 text-xs px-2.5 py-1 rounded-md font-bold border border-amber-400/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold bg-white/95 border border-[#E8DFD5]">
                             لوجستيك ومخيمات الميدان
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">قاعدة عمليات متنقلة</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">قاعدة عمليات متنقلة</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             خيام مجهزة، أجهزة أمان، وتجهيزات اتصالات لضمان سلامة الطاقم والمتسابقين في أبعد النقاط الجغرافية.
                         </p>
                     </div>
                 </div>
 
                 <!-- BTS 4: Mobile & Reels -->
-                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                <div class="editorial-card rounded-2xl overflow-hidden reveal">
                     <div class="card-img-container">
                         <img src="images/pitch/media_smartphone_vlog.jpg" alt="إنتاج محتوى رقمي وريلز فوري">
-                        <span class="absolute top-3 right-3 bg-dark-950/90 text-pink-400 text-xs px-2.5 py-1 rounded-md font-bold border border-pink-400/30">
+                        <span class="absolute top-3 right-3 bg-white/90 text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold bg-white/95 border border-[#E8DFD5]">
                             Social Media First
                         </span>
                     </div>
                     <div class="p-5">
-                        <h3 class="text-lg font-bold text-white mb-2">تغطية فورية وسطوريات</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">
+                        <h3 class="text-lg font-bold text-[#171614] mb-2">تغطية فورية وسطوريات</h3>
+                        <p class="text-xs text-[#757065] leading-relaxed">
                             نشر فوري لكواليس التصوير واستطلاعات الرأي اليومية لإشعال الفضول والتفاعل قبل عرض الحلقات الكاملة.
                         </p>
                     </div>
@@ -851,60 +846,60 @@
         </div>
     </section>
 
-    <!-- SECTION: MEDIA PLAN & SPONSOR ROI (خطة البث والانتشار الرقمي) -->
-    <section class="py-24 relative bg-dark-900 border-t border-white/10" id="media-roi-section">
+    <!-- SECTION: MEDIA PLAN & SPONSOR PACKAGES (Clean Editorial Layout) -->
+    <section class="py-24 relative bg-[#FAF8F5] border-t border-[#E8DFD5]" id="media-roi-section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-extrabold uppercase tracking-widest text-brand-gold block mb-3 font-latin">MEDIA DISTRIBUTION & BRAND VISIBILITY</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mb-6">
-                    خطة البث الرقمي <span class="text-gradient-gold">والعائد الإعلاني للرعاة</span>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-[#BC5D3B] block mb-2 font-latin">DISPOSITIF MÉDIA & VISIBILITÉ PARTENAIRES</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#171614] mb-4">
+                    خطة النشر الرقمي <span class="text-[#BC5D3B]">والحضور الإعلاني</span>
                 </h2>
-                <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
-                    حملة إعلامية متكاملة تدوم 6 أسابيع تضمن وصول العلامة التجارية لملايين المغاربة المهتمين بالسفر، التراث، والمغامرة.
+                <p class="text-[#524E46] text-base sm:text-lg leading-relaxed">
+                    حملة متواصلة على مدار 6 أسابيع توفر تواجداً استراتيجياً وتفاعلياً للرعاة عبر يوتيوب، إنستغرام، وتيك توك مع جمهور مغربي شغوف.
                 </p>
             </div>
 
             <!-- Numbers Grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-                <div class="glass p-6 rounded-2xl text-center border border-white/10 reveal">
-                    <div class="text-4xl sm:text-5xl font-black text-brand-gold font-mono mb-2">6</div>
-                    <div class="text-xs sm:text-sm font-bold text-white">حلقات يوتيوب رئيسية</div>
-                    <div class="text-[11px] text-gray-400 mt-1">مدة 45-60 دقيقة بجودة 4K</div>
+                <div class="editorial-card p-6 rounded-2xl text-center border border-[#E8DFD5] reveal">
+                    <div class="text-4xl sm:text-5xl font-black text-[#A68238] font-mono mb-2">6</div>
+                    <div class="text-xs sm:text-sm font-bold text-[#171614]">حلقات يوتيوب رئيسية</div>
+                    <div class="text-[11px] text-[#757065] mt-1">مدة 45-60 دقيقة بجودة 4K</div>
                 </div>
 
-                <div class="glass p-6 rounded-2xl text-center border border-white/10 reveal">
-                    <div class="text-4xl sm:text-5xl font-black text-brand-crema font-mono mb-2">18</div>
-                    <div class="text-xs sm:text-sm font-bold text-white">فيديو Reel & Shorts</div>
-                    <div class="text-[11px] text-gray-400 mt-1">مونتاج سريع ولحظات حاسمة</div>
+                <div class="editorial-card p-6 rounded-2xl text-center border border-[#E8DFD5] reveal">
+                    <div class="text-4xl sm:text-5xl font-black text-[#BC5D3B] font-mono mb-2">18</div>
+                    <div class="text-xs sm:text-sm font-bold text-[#171614]">فيديو Reel & Shorts</div>
+                    <div class="text-[11px] text-[#757065] mt-1">مونتاج سريع ولحظات حاسمة</div>
                 </div>
 
-                <div class="glass p-6 rounded-2xl text-center border border-white/10 reveal">
+                <div class="editorial-card p-6 rounded-2xl text-center border border-[#E8DFD5] reveal">
                     <div class="text-4xl sm:text-5xl font-black text-emerald-400 font-mono mb-2">60+</div>
-                    <div class="text-xs sm:text-sm font-bold text-white">سطوري إنستغرام وتيك توك</div>
-                    <div class="text-[11px] text-gray-400 mt-1">تفاعل يومي ومنشن للرعاة</div>
+                    <div class="text-xs sm:text-sm font-bold text-[#171614]">سطوري إنستغرام وتيك توك</div>
+                    <div class="text-[11px] text-[#757065] mt-1">تفاعل يومي ومنشن للرعاة</div>
                 </div>
 
-                <div class="glass p-6 rounded-2xl text-center border border-white/10 reveal">
+                <div class="editorial-card p-6 rounded-2xl text-center border border-[#E8DFD5] reveal">
                     <div class="text-4xl sm:text-5xl font-black text-blue-400 font-mono mb-2">1.5M+</div>
-                    <div class="text-xs sm:text-sm font-bold text-white">توقعات المشاهدات الإجمالية</div>
-                    <div class="text-[11px] text-gray-400 mt-1">جمهور مغربي نشط 100%</div>
+                    <div class="text-xs sm:text-sm font-bold text-[#171614]">توقعات المشاهدات الإجمالية</div>
+                    <div class="text-[11px] text-[#757065] mt-1">جمهور مغربي نشط 100%</div>
                 </div>
             </div>
 
             <!-- Sponsor Guarantee Box -->
-            <div class="glass-card p-8 sm:p-12 rounded-3xl border border-brand-crema/40 bg-gradient-to-r from-dark-950 via-dark-900 to-amber-950/20 text-center max-w-4xl mx-auto reveal">
-                <h3 class="text-2xl sm:text-3xl font-black text-white mb-4">
+            <div class="editorial-card p-8 sm:p-12 rounded-3xl border border-brand-crema/40 bg-gradient-to-r from-dark-950 via-dark-900 to-amber-950/20 text-center max-w-4xl mx-auto reveal">
+                <h3 class="text-2xl sm:text-3xl font-black text-[#171614] mb-4">
                     جاهزون لتقديم العرض الرسمي لشركة أسطا
                 </h3>
-                <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+                <p class="text-[#524E46] text-sm sm:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
                     هذا الموقع التقديمي تم إعداده خصيصاً لمشاركتكم الرؤية المتكاملة، ويمكن تصفحه على الهاتف والحاسوب، كما نوفر عرضاً مفصلاً لكافة البنود اللوجستية وتفاصيل الميزانية.
                 </p>
                 <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="index.html" class="px-8 py-3.5 rounded-xl bg-brand-gold text-dark-950 font-bold text-sm hover:scale-105 transition-all">
+                    <a href="index.html" class="px-8 py-3.5 rounded-xl bg-[#171614] text-[#FAF8F5] font-bold text-sm hover:scale-105 transition-all">
                         تصفح الموقع العام للبرنامج
                     </a>
-                    <a href="#map-section" class="px-8 py-3.5 rounded-xl glass border border-white/20 text-white font-bold text-sm hover:bg-white/10 transition-all">
+                    <a href="#map-section" class="px-8 py-3.5 rounded-xl bg-[#FFFFFF] border border-[#E8DFD5] border border-[#D8C9B9] text-[#171614] font-bold text-sm hover:bg-white/10 transition-all">
                         العودة لخريطة المسارات
                     </a>
                 </div>
@@ -913,26 +908,26 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 bg-dark-950 py-12 text-center text-sm text-gray-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <span class="font-extrabold text-lg text-brand-gold">«تحدي المليون»</span>
-                <span class="text-xs font-latin">© 2026 Tous droits réservés</span>
+    <!-- FOOTER (Editorial Clean Style) -->
+    <footer class="border-t border-[#E8DFD5] bg-[#FAF8F5] py-12 text-xs text-[#757065]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <span class="font-black text-base text-[#171614]">«تحدي المليون»</span>
+                <span class="font-latin text-[#757065]">| Le Défi du Million © 2026</span>
             </div>
 
-            <div class="flex flex-wrap justify-center items-center gap-6 text-xs text-gray-400">
-                <span>Café Asta (قهوة أسطا)</span>
-                <span>•</span>
+            <div class="flex flex-wrap justify-center items-center gap-4 font-medium text-[#524E46]">
+                <span>Café Asta</span>
+                <span class="text-[#D8C9B9]">•</span>
                 <span>Renault Top Auto Mohammedia</span>
-                <span>•</span>
+                <span class="text-[#D8C9B9]">•</span>
                 <span>Dacia Bigster Hybrid</span>
-                <span>•</span>
+                <span class="text-[#D8C9B9]">•</span>
                 <span>Fayssal Vlog</span>
             </div>
 
-            <div class="text-xs text-gray-500 font-latin">
-                Moroccan Adventure & Heritage Series
+            <div class="font-latin text-[#757065]">
+                Série Documentaire & Patrimoine Marocain
             </div>
         </div>
     </footer>
@@ -946,13 +941,13 @@
         // Render Simplified Stops Cards below map
         function showEpisodeCards(epId) {
             document.querySelectorAll('.ep-tab-btn').forEach(b => {
-                b.classList.remove('bg-brand-gold', 'text-dark-950');
-                b.classList.add('glass', 'text-gray-300');
+                b.classList.remove('bg-[#171614]', 'text-[#FAF8F5]', 'shadow-sm');
+                b.classList.add('bg-white', 'border', 'border-[#E8DFD5]', 'text-[#524E46]');
             });
             const activeBtn = document.getElementById('ep-tab-' + epId);
             if (activeBtn) {
-                activeBtn.classList.remove('glass', 'text-gray-300');
-                activeBtn.classList.add('bg-brand-gold', 'text-dark-950');
+                activeBtn.classList.remove('bg-white', 'border', 'border-[#E8DFD5]', 'text-[#524E46]');
+                activeBtn.classList.add('bg-[#171614]', 'text-[#FAF8F5]', 'shadow-sm');
             }
 
             const activeRoutes = window.EPISODES_ROUTES || [];
@@ -971,38 +966,38 @@
 
             stops.forEach((s, idx) => {
                 const card = `
-                    <div class="glass-card rounded-2xl overflow-hidden flex flex-col reveal active">
+                    <div class="editorial-card bg-white border border-[#E8DFD5] rounded-2xl overflow-hidden flex flex-col reveal active shadow-sm">
                         <div class="card-img-container">
                             <img src="${s.image}" alt="${s.name}" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-80"></div>
-                            <span class="absolute top-3 right-3 bg-dark-950/80 backdrop-blur-md border border-brand-gold/40 text-brand-gold text-xs px-2.5 py-1 rounded-md font-bold">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            <span class="absolute top-3 right-3 bg-white/95 backdrop-blur-sm border border-[#E8DFD5] text-[#171614] text-xs px-2.5 py-1 rounded-md font-bold">
                                 المحطة ${idx + 1}
                             </span>
                         </div>
                         <div class="p-5 flex-1 flex flex-col justify-between">
                             <div>
-                                <h4 class="text-2xl font-black text-white mb-4">${s.name}</h4>
+                                <h4 class="text-2xl font-black text-[#171614] mb-3">${s.name}</h4>
 
-                                <div class="bg-amber-950/20 border border-brand-gold/30 rounded-xl p-3 mb-3">
+                                <div class="bg-[#F4EFEA] border border-[#E8DFD5] rounded-xl p-3 mb-2.5">
                                     <div class="flex items-center gap-2 mb-1">
-                                        <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-                                        <span class="text-xs font-extrabold uppercase tracking-wider text-brand-gold">تحدي الصنعة التقليدية</span>
+                                        <svg class="w-4 h-4 text-[#BC5D3B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                                        <span class="text-xs font-bold text-[#BC5D3B]">تحدي الحرفة التقليدية</span>
                                     </div>
-                                    <div class="text-base font-extrabold text-white">«${s.craft_challenge}»</div>
+                                    <div class="text-sm font-bold text-[#171614] leading-snug">«${s.craft_challenge}»</div>
                                 </div>
 
-                                <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3">
+                                <div class="bg-[#FAF8F5] border border-[#E8DFD5] rounded-xl p-3">
                                     <div class="flex items-center gap-2 mb-1">
-                                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                                        <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">تحدي المعلم التاريخي</span>
+                                        <svg class="w-4 h-4 text-[#A68238]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                        <span class="text-xs font-bold text-[#A68238]">تحدي المعلم التاريخي</span>
                                     </div>
-                                    <div class="text-base font-extrabold text-white">«${s.hist_challenge}»</div>
+                                    <div class="text-sm font-bold text-[#171614] leading-snug">«${s.hist_challenge}»</div>
                                 </div>
                             </div>
 
-                            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs text-gray-400">
-                                <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg> <span>${s.hist_site.split('(')[0].trim()}</span></span>
-                                <button type="button" onclick="zoomToStopAnd3D(${s.id})" class="text-brand-crema font-bold hover:underline flex items-center gap-1">
+                            <div class="mt-4 pt-3 border-t border-[#E8DFD5] flex justify-between items-center text-xs text-[#757065]">
+                                <span class="flex items-center gap-1.5 truncate max-w-[170px]"><svg class="w-3.5 h-3.5 text-[#A68238] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg> <span>${s.hist_site.split('(')[0].trim()}</span></span>
+                                <button type="button" onclick="zoomToStopAnd3D(${s.id})" class="text-[#BC5D3B] font-bold hover:underline flex items-center gap-1 shrink-0">
                                     <span>المعاينة 3D</span>
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 </button>
