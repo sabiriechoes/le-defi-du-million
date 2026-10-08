@@ -558,10 +558,10 @@ window.selectEpisode = function(epId) {
                             </span>
                         </div>
                         <h4 style="font-size: 16px; font-weight: 900; margin: 2px 0 4px 0; color: #fff;">${stop.full_name || stop.name}</h4>
-                        <div style="font-size: 11px; color: #D4A373; margin-bottom: 3px;">🔨 <strong>تحدي الصنعة:</strong> «${stop.craft_challenge}»</div>
-                        <div style="font-size: 11px; color: #52c41a; margin-bottom: 6px;">🏛️ <strong>تحدي الأثر:</strong> «${stop.hist_challenge}»</div>
+                        <div style="font-size: 11px; color: #D4A373; margin-bottom: 3px;"><strong>تحدي الحرفة:</strong> «${stop.craft_challenge}»</div>
+                        <div style="font-size: 11px; color: #52c41a; margin-bottom: 6px;"><strong>تحدي المعلم:</strong> «${stop.hist_challenge}»</div>
                         <button type="button" onclick="zoomToStopAnd3D(${stop.id})" style="width: 100%; padding: 7px; background: linear-gradient(to left, #D4A373, #C8A951); color: #0c0b0a; border: none; border-radius: 8px; font-weight: 800; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-                            <span>🔍 زوم + مجسم 3D للمكان (Google Earth)</span>
+                            <span>استكشاف الموقع والمجسم 3D</span>
                         </button>
                     </div>
                 `;

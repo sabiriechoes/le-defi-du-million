@@ -5,7 +5,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollProgressBar();
-    initAmbientCursorSpotlight();
     initHeroGoldenParticles();
     initCountUpAnimations();
     initCard3DTilt();
@@ -20,12 +19,11 @@ function initScrollProgressBar() {
         position: fixed;
         top: 0;
         left: 0;
-        height: 3.5px;
+        height: 2.5px;
         width: 0%;
         background: linear-gradient(90deg, #D4A373, #C8A951, #E29578);
         z-index: 99999;
         transition: width 0.1s ease-out;
-        box-shadow: 0 0 10px rgba(200, 169, 81, 0.8), 0 0 20px rgba(212, 163, 115, 0.5);
     `;
     document.body.appendChild(progressBar);
 
@@ -34,31 +32,6 @@ function initScrollProgressBar() {
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (winScroll / height) * 100;
         progressBar.style.width = scrolled + '%';
-    }, { passive: true });
-}
-
-// 2. AMBIENT CURSOR GLOW SPOTLIGHT (Desktop Only)
-function initAmbientCursorSpotlight() {
-    if (window.innerWidth < 1024) return;
-
-    const spotlight = document.createElement('div');
-    spotlight.id = 'cursor-ambient-spotlight';
-    spotlight.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 1;
-        transition: opacity 0.3s ease;
-        background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(200, 169, 81, 0.06), transparent 70%);
-    `;
-    document.body.appendChild(spotlight);
-
-    window.addEventListener('mousemove', (e) => {
-        spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
-        spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
     }, { passive: true });
 }
 
